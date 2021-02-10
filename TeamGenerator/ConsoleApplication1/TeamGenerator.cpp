@@ -1,6 +1,36 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
 using namespace std;
+
+struct STUDENT
+{
+    string firstName;
+    string LastName;
+    int grade;
+    string role;
+    string email;
+    string teamName = "Not occupied";
+};
+
+struct TEACHERS
+{
+    string firstName;
+    string LastTeam;
+    vector<string> teachingTeams;
+};
+
+struct TEAM
+{
+    string name;
+    string discription;
+    int day, mounth, year;
+    string students[4];
+    string studentsStatus[4];
+};
+
 
 bool mainMenu()
 {
@@ -37,6 +67,7 @@ bool mainMenu()
 
 int main()
 {
+    //vector<STUDENT> students;
     bool exit=false;
     do {
         exit = mainMenu();
