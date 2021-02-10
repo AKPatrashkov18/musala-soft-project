@@ -61,6 +61,14 @@ void printStudents(vector<STUDENT>& students, int& studentsCount)
     }
 }
 
+void deleteStudents(vector<STUDENT>& students, int& studentsCount)
+{
+    int deleteIndex;
+    cin >> deleteIndex;
+    students.erase(students.begin() + deleteIndex);
+    studentsCount--;
+}
+
 bool mainMenu(vector<STUDENT>& students, int& studentsCount)
 {
     cout << "1. Add students or teachers"<<endl;
@@ -92,7 +100,6 @@ bool mainMenu(vector<STUDENT>& students, int& studentsCount)
             return mainMenu(students, studentsCount);
 
     }
-
 }
 
 int main()
@@ -103,6 +110,7 @@ int main()
     do {
         exit = mainMenu(students, studentsCount);
     } while (exit);
+    deleteStudents(students, studentsCount);
     printStudents(students, studentsCount);
     return 0;
 }
