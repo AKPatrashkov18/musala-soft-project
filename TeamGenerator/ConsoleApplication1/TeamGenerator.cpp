@@ -49,7 +49,7 @@ void addStudent(vector<STUDENT>& students, int& studentsCount)
     }
 }
 
-void printStudents(vector<STUDENT>& students, int& studentsCount)
+void printStudents(const vector<STUDENT>& students, int& studentsCount)
 {
     for (int i = 0; i < studentsCount; i++)
     {
@@ -67,6 +67,41 @@ void deleteStudents(vector<STUDENT>& students, int& studentsCount)
     cin >> deleteIndex;
     students.erase(students.begin() + deleteIndex);
     studentsCount--;
+}
+
+void editStudent(vector<STUDENT>& students)
+{
+    cout << "choose index: ";
+    int index;
+    cin >> index;
+    cout << endl;
+    cout << "1. name" << endl;
+    cout << "2. lastname" << endl;
+    cout << "3. grade" << endl;
+    cout << "4. role" << endl;
+    cout << "5. email" << endl;
+    int option;
+    cin >> option;
+    switch (option)
+    {
+        case 1:
+            cin>>students[index].firstName;
+            break;
+        case 2:
+            cin >> students[index].LastName;
+            break;
+        case 3:
+            cin >> students[index].grade;
+            break;
+        case 4:
+            cin >> students[index].role;
+            break;
+        case 5:
+            cin >> students[index].email;
+            break;
+        default:
+            break;
+    }
 }
 
 bool mainMenu(vector<STUDENT>& students, int& studentsCount)
@@ -88,6 +123,7 @@ bool mainMenu(vector<STUDENT>& students, int& studentsCount)
             return true;
             break;
         case 3:
+            editStudent(students);
             return true;
             break;
         case 4:
