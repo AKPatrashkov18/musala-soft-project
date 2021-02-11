@@ -13,6 +13,7 @@ struct STUDENT
     string role;
     string email;
     string teamName = "Not occupied";
+    int id;
 };
 
 struct TEACHERS
@@ -45,19 +46,68 @@ void addStudent(vector<STUDENT>& students, int& studentsCount)
         cin >> students[i].grade;
         cin >> students[i].role;
         cin >> students[i].email;
+        students[i].id = i;
         studentsCount++;
     }
 }
 
-void printStudents(const vector<STUDENT>& students, int& studentsCount)
+void printStudents(const vector<STUDENT>& students, const int& studentsCount)
 {
     for (int i = 0; i < studentsCount; i++)
     {
+        cout << "First name: ";
         cout << students[i].firstName << endl;
+        cout << "Last name: ";
         cout << students[i].LastName << endl;
-        cout << students[i].grade << endl;
+        cout << "Grade: ";
+        cout << students[i].grade<< endl;
+        cout << "Role: ";
         cout << students[i].role << endl;
+        cout << "Email: ";
         cout << students[i].email << endl;
+    }
+}
+
+int findIndex(const vector<STUDENT>& students, const int& studentsCount, int wantedId)
+{
+    int index;
+    for (int i = 0; i < studentsCount; i++)
+    {
+        if (students[i].id == wantedId)
+        {
+            return i;
+        }
+    }
+}
+string makeStudentReport(const vector<STUDENT>& students, const int& studentsCount, int wantedId)
+{
+    string report;
+    int index = findIndex(students, studentsCount, wantedId);
+    report += "First name: " + students[index].firstName + "\n";
+    report += "Last name: " + students[index].LastName + "\n";
+    report += "Grade: " + to_string(students[index].grade) + "\n";
+    report += "Role: " + students[index].role + "\n";
+    report += "Email: " + students[index].email + "\n";
+    report += "Id: " + to_string(students[index].id) + "\n";
+
+    return report;
+}
+
+void createStudentsReport(const vector<STUDENT>& students, const int& studentsCount)
+{
+    ofstream studentReport("studentsRepost.txt",ios::in, ios::trunc);
+    if (studentReport.is_open())
+    {
+        cout << "Choose from whitch to whitch id you want to create report: ";
+        int startindId, edindID;
+        cin >> startindId >> edindID;
+        for (int i = startindId; i <= edindID; i++)
+        {
+            studentReport << makeStudentReport(students, studentsCount, i);
+        }
+    }
+    else {
+        cout << "error";
     }
 }
 
