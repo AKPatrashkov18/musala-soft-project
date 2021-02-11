@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <time.h>  
 
 using namespace std;
 
@@ -12,7 +13,7 @@ struct STUDENT
     int grade;
     string role;
     string email;
-    string teamName = "Not occupied";
+    string teamStatus = "Not occupied";
     int id;
 };
 
@@ -27,10 +28,55 @@ struct TEAM
 {
     string name;
     string discription;
-    int day, mounth, year;
+    string date;
     string students[4];
     string studentsStatus[4];
 };
+
+vector<int> findRole(const vector<STUDENT>& students, const int& studentsCount, const string wantedRole)
+{
+    vector<int> roleId;
+    for (int i = 0; i < studentsCount; i++)
+    {
+        if (students[i].role == wantedRole)
+        {
+            roleId.push_back(students[i].id);
+        }
+    }
+    return roleId;
+}
+
+int suffleIndex(const vector<STUDENT>& students, const int& studentsCount, const string wantedRole)
+{
+    vector<int> roleId;
+    roleId = findRole(students, studentsCount, wantedRole);
+    int shuffle;
+    for (int i = 0; i < roleId.size(); i++)
+    {
+        shuffle = rand() % roleId.size();
+        swap(roleId[0], roleId[shuffle]);
+    }
+    for (int i = 0; i < roleId.size(); i++)
+    {
+        if (students[i].teamStatus == "Not occupied")
+        {
+            return roleId[i];
+        }
+    }
+    cout << "sorry but no " << wantedRole << " left";
+}
+
+void generateTeam(const vector<STUDENT>& students, const int& studentsCount, vector<TEAM>& teams)
+{
+    int studentIndex = suffleIndex(students, studentsCount, "Back End");
+    teams[0].students[0] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
+    int studentIndex = suffleIndex(students, studentsCount, "Front End");
+    teams[1].students[1] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
+    int studentIndex = suffleIndex(students, studentsCount, "QA");
+    teams[2].students[2] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
+    int studentIndex = suffleIndex(students, studentsCount, "scrup");
+    teams[3].students[3] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
+}
 
 void addStudent(vector<STUDENT>& students, int& studentsCount)
 {
@@ -68,27 +114,15 @@ void printStudents(const vector<STUDENT>& students, const int& studentsCount)
     }
 }
 
-int findIndex(const vector<STUDENT>& students, const int& studentsCount, int wantedId)
-{
-    int index;
-    for (int i = 0; i < studentsCount; i++)
-    {
-        if (students[i].id == wantedId)
-        {
-            return i;
-        }
-    }
-}
 string makeStudentReport(const vector<STUDENT>& students, const int& studentsCount, int wantedId)
 {
     string report;
-    int index = findIndex(students, studentsCount, wantedId);
-    report += "First name: " + students[index].firstName + "\n";
-    report += "Last name: " + students[index].LastName + "\n";
-    report += "Grade: " + to_string(students[index].grade) + "\n";
-    report += "Role: " + students[index].role + "\n";
-    report += "Email: " + students[index].email + "\n";
-    report += "Id: " + to_string(students[index].id) + "\n";
+    report += "First name: " + students[wantedId].firstName + "\n";
+    report += "Last name: " + students[wantedId].LastName + "\n";
+    report += "Grade: " + to_string(students[wantedId].grade) + "\n";
+    report += "Role: " + students[wantedId].role + "\n";
+    report += "Email: " + students[wantedId].email + "\n";
+    report += "Id: " + to_string(students[wantedId].id) + "\n";
 
     return report;
 }
@@ -98,12 +132,10 @@ void createStudentsReport(const vector<STUDENT>& students, const int& studentsCo
     ofstream studentReport("studentsRepost.txt",ios::in, ios::trunc);
     if (studentReport.is_open())
     {
-        cout << "Choose from whitch to whitch id you want to create report: ";
-        int startindId, edindID;
-        cin >> startindId >> edindID;
-        for (int i = startindId; i <= edindID; i++)
+        for (int i = 0; i < studentsCount; i++)
         {
             studentReport << makeStudentReport(students, studentsCount, i);
+            studentReport << "\n";
         }
     }
     else {
@@ -190,13 +222,14 @@ bool mainMenu(vector<STUDENT>& students, int& studentsCount)
 
 int main()
 {
+    srand(time(NULL));
     vector<STUDENT> students;
     bool exit=false;
     int studentsCount = 0;
     do {
         exit = mainMenu(students, studentsCount);
     } while (exit);
-    deleteStudents(students, studentsCount);
     printStudents(students, studentsCount);
+    createStudentsReport(students, studentsCount);
     return 0;
 }
