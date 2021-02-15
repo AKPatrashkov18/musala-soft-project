@@ -1,0 +1,30 @@
+Create a function in C++ that takes two integers and checks if they are equal. 
+Create a function in C++ that takes a number as its only argument and returns true if it's less than or equal to zero, otherwise return false.
+Write a function in C++ that takes two integers (hours, minutes), converts them to seconds, and adds them.
+Write a JavaScript program to rotate the string 'w3resource' in right direction by periodically removing one letter from the end of the string and attaching it to the front. 
+Write a JavaScript program to compute the sum of the two given integers, If the sum is in the range 50..80 return 65 other wise return 80.
+Write a program in Python that asks the user how many Fibonnaci numbers to generate and then generates them. Take this opportunity to think about how you can use functions. Make sure to ask the user to enter the number of numbers in the sequence to generate.
+Create a function in Python that takes a base number and an exponent number and returns the calculation.
+Create a function in Python that takes a number as an argument and returns negative of that number. Return negative numbers without any change.
+Write a program in C# Sharp to create a nested struct to store two data for an employee in an array.
+Write a program in C# Sharp to implement a method that returns a structure including calling the method and using its value.
+Write a program in C# Sharp to declares a struct with a property, a method, and a private field.
+Write a C program to read the value of an integer m and display the value of n is 1 when m is larger than 0, 0 when m is 0 and -1 when m is less than 0.
+Write a C program to accept a coordinate point in a XY coordinate system and determine in which quadrant the coordinate point lies.
+Write a C program to accept two integers and check whether they are equal or not.
+Write a function in C++ that takes an integer i and returns a string with the integer backwards followed by the original integer.
+Create a function in C++ that determines if the temp of the water is considered boiling or not. temp will be measured in fahrenheit and celsius.
+Given an integer n, create a function in Python that returns the length of the repeating cycle of the sequence 1/n. If the cycle is non-repetitive, return -1.
+Create a function in Python that takes a strings characters as ASCII and returns each characters hexadecimal value as a string.
+Write the regular expression that will match all non-digit characters of a string. Use the character class \D in your expression. (in Python)
+Write a JavaScript function that generates all combinations of a string.
+Write a JavaScript function that accepts a string as a parameter and counts the number of vowels within the string.
+Write a JavaScript function which returns the n rows by n columns identity matrix.
+Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.
+Create a function in JavaScript that takes an array of numbers and return "Boom!" if the digit 7 appears in the array. Otherwise, return "there is no 7 in the array".
+Create a function in JavaScript that takes a variable number of arguments, each argument representing the number of items in a group, and returns the number of permutations (combinations) of items that you could get by taking one item from each group.
+Write a program in C to delete a specific line from a file.
+Write a program in C to replace a specific line with another text in a file.
+Write a program in C to copy a file in another name.
+Write a program in C to remove a file from the disk.
+Write a C program to count the number of two 5's are next to each other in an array of integers. Also count the situation where the second 5 is actually a 6.
