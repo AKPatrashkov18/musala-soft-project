@@ -32,6 +32,8 @@ struct TEAM
     string date;
     string students[4];
     string studentsStatus[4];
+    string teacher;
+    int id = 0;
 };
 
 /*void printTeams(const vector<TEAM>& teams)
@@ -305,7 +307,133 @@ void addTeachers(vector<TEACHER>& teachers)
     }
 }
 
-bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers)
+vector<int> findRole(const vector<STUDENT>& students, const string wantedRole)
+{
+    vector<int> roleId;
+    for (int i = 0; i < students.size(); i++)
+    {
+        if (students[i].role == wantedRole)
+        {
+            roleId.push_back(students[i].id);
+        }
+    }
+    return roleId;
+}
+
+int chooseRandomIndex(const vector<STUDENT>& students, const string wantedRole)
+{
+    vector<int> roleId;
+    roleId = findRole(students, wantedRole);
+    int shuffle;
+    for (int i = 0; i < roleId.size(); i++)
+    {
+        shuffle = rand() % roleId.size();
+        swap(roleId[0], roleId[shuffle]);
+    }
+    for (int i = 0; i < roleId.size(); i++)
+    {
+        if (students[i].teamStatus == "Not occupied")
+        {
+            return roleId[i];
+        }
+    }
+    cout << "Sorry but no " << wantedRole << " left";
+    return -1;
+}
+
+void generateTeam(const vector<STUDENT>& students, vector<TEAM>& teams, vector<TEACHER>& teachers)
+{
+    ifstream teamsName("Data Files\\teamNames.txt");
+    ifstream teamDescription("Data Files\\teamTasks.txt");
+    int studentIndex;
+    teams.push_back(TEAM());
+    studentIndex = chooseRandomIndex(students, "BackEnd");
+    teams[teams.size()-1].students[0] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
+    studentIndex = chooseRandomIndex(students, "FrontEnd");
+    teams[teams.size()-1].students[1] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
+    studentIndex = chooseRandomIndex(students, "QA");
+    teams[teams.size()-1].students[2] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
+    studentIndex = chooseRandomIndex(students, "Scrum");
+    teams[teams.size()-1].students[3] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
+
+    int teamNameIndex = rand() % 30;
+    int teamDescriptionIndex = rand() % 30;
+
+    string container;
+    for (int i = 0; i < teamNameIndex; i++)
+    {
+        getline(teamsName, container);
+    }
+    getline(teamsName, container);
+    teams[teams.size()-1].name = container;
+
+    for (int i = 0; i < teamDescriptionIndex; i++)
+    {
+        getline(teamDescription, container);
+    }
+    getline(teamDescription, container);
+
+    teams[teams.size()-1].discription = container;
+
+    int randomIndex = rand() % teachers.size();
+    teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName; 
+    teams[teams.size() - 1].id = teams.size() - 1;
+    teachers[randomIndex].teachingTeams.push_back(teams[teams.size() - 1].name);
+}
+
+string makeStudentsReport(const vector<STUDENT>& students)
+{
+    string report;
+    for (int i = 0; i < students.size(); i++)
+    {
+        report += "First name: " + students[i].firstName + '\n';
+        report += "Last name: " + students[i].lastName + '\n';
+        report += "Grade: " + to_string(students[i].grade) + '\n';
+        report += "Role: " + students[i].role + '\n';
+        report += "Email: " + students[i].email + '\n';
+        report += "Id: " + to_string(students[i].id) + '\n';
+    }
+
+    return report;
+}
+
+string makeTeachersReport(const vector<TEACHER>& teachers)
+{
+    string report;
+    for (int i = 0; i < teachers.size(); i++)
+    {
+        report += "First name: " + teachers[i].firstName + '\n';
+        report += "Last name: " + teachers[i].lastName + '\n';
+        report += "Teacing teams:" + '\n';
+        for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
+        {
+            report += teachers[i].teachingTeams[j] + '\n';
+        }
+        report += "Id: " + to_string(teachers[i].id) + '\n';
+    }
+
+    return report;
+}
+
+string makeTeamsReport(const vector<TEAM>& teams)
+{
+    string report;
+    for (int i = 0; i < teams.size(); i++)
+    {
+        report += "First name: " + teams[i].name + '\n';
+        report += "Description:" + teams[i].discription + '\n';
+        report += "Students: " + '\n';
+        for (int j = 0; j < 4; j++)
+        {
+            report += teams[i].students[j] + '\n';
+        }
+        report += "Id: " + to_string(teams[i].id) + '\n';
+    }
+
+    return report;
+}
+
+bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
     cout << "1. Add students" << endl;
     cout << "2. Add teacher" << endl;
@@ -329,6 +457,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers)
             return true;
             break;
         case 3:
+            generateTeam(students, teams, teachers);
             return true;
             break;
         case 4:
@@ -350,7 +479,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers)
             return false;
             break;
         default:
-            return mainMenu(students, teachers);
+            return mainMenu(students, teachers, teams);
 
     }
 }
@@ -359,9 +488,10 @@ int main()
 {
     srand(time(NULL));
     vector<STUDENT> students;
-    vector<TEACHER> teachers
+    vector<TEACHER> teachers;
+    vector<TEAM> teams;
     bool exit=false;
     do {
-        exit = mainMenu(students, teachers);
+        exit = mainMenu(students, teachers, teams);
     } while (exit);
 }
