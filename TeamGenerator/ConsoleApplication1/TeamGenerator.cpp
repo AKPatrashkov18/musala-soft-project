@@ -8,20 +8,21 @@ using namespace std;
 
 struct STUDENT
 {
-    string firstName;
-    string LastName;
-    int grade;
-    string role;
-    string email;
+    string firstName = "";
+    string lastName = "";
+    int grade = 0;
+    string role = "";
+    string email = "";
     string teamStatus = "Not occupied";
-    int id;
+    int id = 0;
 };
 
-struct TEACHERS
+struct TEACHER
 {
     string firstName;
-    string LastTeam;
+    string lastName;
     vector<string> teachingTeams;
+    int id = 0;
 };
 
 struct TEAM
@@ -33,7 +34,7 @@ struct TEAM
     string studentsStatus[4];
 };
 
-void printTeams(const vector<TEAM>& teams)
+/*void printTeams(const vector<TEAM>& teams)
 {
     for (int i = 0; i < teams.size(); i++)
     {
@@ -47,7 +48,7 @@ void printTeams(const vector<TEAM>& teams)
     }
 }
 
-/*void printTeams(const vector<TEAM>& teams)
+void printTeams(const vector<TEAM>& teams)
 {
     ofstream teamsReport("teamsRepost.txt", ios::in, ios::trunc);
     ifstream teamsName("teamNames.txt", ios::out);
@@ -90,7 +91,7 @@ void printTeams(const vector<TEAM>& teams)
     teamsReport.close();
     teamsName.close();
     teamDescription.close();
-}*/
+}
 
 vector<int> findRole(const vector<STUDENT>& students, const int& studentsCount, const string wantedRole)
 {
@@ -269,39 +270,87 @@ void editStudent(vector<STUDENT>& students)
         default:
             break;
     }
+}*/
+
+void addStudent(vector<STUDENT>& students)
+{
+    cout << "How many students do you want to enter: ";
+    int quantity;
+    cin >> quantity;
+    quantity += students.size();
+    for (int i = students.size(); i < quantity; i++)
+    {
+        students.push_back(STUDENT());
+        cin >> students[i].firstName;
+        cin >> students[i].lastName;
+        cin >> students[i].grade;
+        cin >> students[i].role;
+        cin >> students[i].email;
+        students[i].id = i;
+    }
 }
 
-bool mainMenu(vector<STUDENT>& students, int& studentsCount, vector<TEAM> teams, int& teamCount)
+void addTeachers(vector<TEACHER>& teachers)
 {
-    cout << "1. Add students or teachers"<<endl;
-    cout << "2. Generate team"<<endl;
-    cout << "3. Edit teams, students or teachers"<<endl;
-    cout << "4. Print teams, students or teachers" << endl;
-    cout << "9. Exit"<<endl;
+    cout << "How many teachers do you want to enter: ";
+    int quantity;
+    cin >> quantity;
+    quantity += teachers.size();
+    for (int i = teachers.size(); i < quantity; i++)
+    {
+        teachers.push_back(TEACHER());
+        cin >> teachers[i].firstName;
+        cin >> teachers[i].lastName;
+        teachers[i].id = i;
+    }
+}
+
+bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers)
+{
+    cout << "1. Add students" << endl;
+    cout << "2. Add teacher" << endl;
+    cout << "3. Generate teams" << endl;
+    cout << "4. Edit teams, students or teachers" << endl;
+    cout << "5. Print teams, students or teachers" << endl;
+    cout << "6. Create teams, students or teachers" << endl;
+    cout << "7. Save" << endl;
+    cout << "8. Open last save" << endl;
+    cout << "9. Exit" << endl;
     int option;
     cin >> option;
     switch (option)
     {
         case 1:
-            addStudent(students, studentsCount);
+            addStudent(students);
             return true;
             break;
         case 2:
-            generateTeam(students, studentsCount, teams, teamCount);
+            addTeachers(teachers);
             return true;
             break;
         case 3:
-            editStudent(students);
             return true;
             break;
         case 4:
+            return true;
+            break;
+        case 5:
+            return true;
+            break;
+        case 6:
+            return true;
+            break;
+        case 7:
+            return true;
+            break;
+        case 8:
             return true;
             break;
         case 9:
             return false;
             break;
         default:
-            return mainMenu(students, studentsCount, teams, teamCount);
+            return mainMenu(students, teachers);
 
     }
 }
@@ -310,11 +359,9 @@ int main()
 {
     srand(time(NULL));
     vector<STUDENT> students;
-    vector<TEAM> teams;
+    vector<TEACHER> teachers
     bool exit=false;
-    int studentsCount = 0;
-    int teamCount = 0;
     do {
-        exit = mainMenu(students, studentsCount, teams, teamCount);
+        exit = mainMenu(students, teachers);
     } while (exit);
 }
