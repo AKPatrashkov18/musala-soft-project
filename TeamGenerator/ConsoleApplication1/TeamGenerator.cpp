@@ -15,6 +15,11 @@ struct STUDENT
     string email;
     string teamStatus;
     int id = 0;
+
+    std::string toString()
+    {
+        return firstName + ',' + lastName + ',' + to_string(grade) + ',' + role + ',' + email + ',' + teamStatus + ',' + to_string(id);
+    }
 };
 
 struct TEACHER
@@ -23,6 +28,17 @@ struct TEACHER
     string lastName;
     vector<string> teachingTeams;
     int id = 0;
+    std::string toString()
+    {
+        string teacherSaveFile;
+        teacherSaveFile += firstName + ',' + lastName;
+        for (int i = 0; i < teachingTeams.size(); i++)
+        {
+            teacherSaveFile += ',' + teachingTeams[i];
+        }
+        teacherSaveFile += ',' + to_string(id);
+        return teacherSaveFile;
+    }
 };
 
 struct TEAM
@@ -34,6 +50,17 @@ struct TEAM
     string status;
     string teacher;
     int id = 0;
+    std::string toString()
+    {
+        string teacherSaveFile;
+        teacherSaveFile += name + ',' + discription;
+        for (int i = 0; i < 4; i++)
+        {
+            teacherSaveFile += ',' + students[i];
+        }
+        teacherSaveFile += status + ',' + teacher + ',' + to_string(id);
+        return teacherSaveFile;
+    }
 };
 
 /*void printTeams(const vector<TEAM>& teams)
@@ -318,11 +345,6 @@ int findRole(vector<STUDENT>& students, const string wantedRole)
             roleId.push_back(students[i].id);
         }
     }
-    for (int i = 0; i < roleId.size(); i++)
-    {
-        cout << roleId[i] << " ";
-    }
-    cout << endl;
     if (roleId.size() == 0)
     {
         cerr << "Error" << endl;//not enough students
@@ -406,7 +428,7 @@ string makeTeachersReport(const vector<TEACHER>& teachers)
     {
         report += "First name: " + teachers[i].firstName + '\n';
         report += "Last name: " + teachers[i].lastName + '\n';
-        report += "Teacing teams:" + '\n';
+        report += "Teaching teams: " + '\n';
         for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
         {
             report += teachers[i].teachingTeams[j] + '\n';
@@ -436,15 +458,134 @@ string makeTeamsReport(const vector<TEAM>& teams)
     return report;
 }
 
+void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams)
+{
+    cout << "1. Print students" << endl;
+    cout << "2. Print teams" << endl;
+    cout << "3. Print teachers" << endl;
+    int option;
+    cin >> option;
+    switch (option)
+    {
+        case 1:
+            cout << makeStudentsReport(students);
+            break;
+        case 2:
+            cout << makeTeamsReport(teams);
+            break;
+        case 3:
+            cout << makeTeachersReport(teachers);
+            break;
+        default:
+            break;
+    }
+}
+
+void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams)
+{
+    ofstream reports;
+    cout << "1. Create students reports" << endl;
+    cout << "2. Create teachers report" << endl;
+    cout << "3. Create teams report" << endl;
+    int option;
+    cin >> option;
+    switch (option)
+    {
+    case 1:
+        reports.open("Reports\\studentsReport.txt", ios::in, ios::trunc);
+        if (reports.is_open())
+        {
+            reports << makeStudentsReport(students);
+            reports.close();
+        }
+        else {
+            cerr << "Error";
+        }
+        break;
+    case 2:
+        reports.open("Reports\\teachersReport.txt", ios::in, ios::trunc);
+        if (reports.is_open())
+        {
+            reports << makeTeachersReport(teachers);
+            reports.close();
+        }
+        else {
+            cerr << "Error";
+        }
+        break;
+    case 3:
+        reports.open("Reports\\teamsReport.txt", ios::in, ios::trunc);
+        if (reports.is_open())
+        {
+            reports << makeTeamsReport(teams);
+            reports.close();
+        }
+        else {
+            cerr << "Error";
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    ofstream studentsSaveFiles;
+    ofstream teachersSaveFiles;
+    ofstream teamsSaveFiles;
+
+    studentsSaveFiles.open("Save files\\studentsSaveFile.txt", ios::in, ios::trunc);
+    if (studentsSaveFiles.is_open())
+    {
+        for (int i = 0; i < students.size(); i++)
+        {
+            studentsSaveFiles << students[i].toString() << endl;
+        }
+        studentsSaveFiles.close();
+    }
+    else
+    {
+        cerr << "Error";
+    }
+
+    teachersSaveFiles.open("Save files\\teachersSaveFile.txt", ios::in, ios::trunc);
+    if (teachersSaveFiles.is_open())
+    {
+        for (int i = 0; i < teachers.size(); i++)
+        {
+            teachersSaveFiles << teachers[i].toString() << endl;
+        }
+        teachersSaveFiles.close();
+    }
+    else
+    {
+        cerr << "Error";
+    }
+
+    teamsSaveFiles.open("Save files\\teamsSaveFile.txt", ios::in, ios::trunc);
+    if (teamsSaveFiles.is_open())
+    {
+        for (int i = 0; i < teams.size(); i++)
+        {
+            teamsSaveFiles << teams[i].toString() << endl;
+        }
+        teamsSaveFiles.close();
+    }
+    else
+    {
+        cerr << "Error";
+    }
+}
 
 bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
     cout << "1. Add students" << endl;
     cout << "2. Add teacher" << endl;
     cout << "3. Generate teams" << endl;
-    cout << "4. Edit teams, students or teachers" << endl;
-    cout << "5. Print teams, students or teachers" << endl;
-    cout << "6. Create teams, students or teachers" << endl;
+    cout << "4. Print teams, students or teachers" << endl;
+    cout << "5. Create teams, students or teachers reposrts" << endl;
+    cout << "6. Edit student, teacher or a team" << endl;
     cout << "7. Save" << endl;
     cout << "8. Open last save" << endl;
     cout << "9. Exit" << endl;
@@ -465,15 +606,18 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 4:
+            printMenu(students, teachers, teams);
             return true;
             break;
         case 5:
+            reportsMenu(students, teachers, teams);
             return true;
             break;
         case 6:
             return true;
             break;
         case 7:
+            saveFiles(students, teachers, teams);
             return true;
             break;
         case 8:
