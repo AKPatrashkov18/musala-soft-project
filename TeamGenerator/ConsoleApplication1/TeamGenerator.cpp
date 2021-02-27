@@ -385,6 +385,9 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     ifstream teachersSaveFile;
     ifstream teamsSaveFile;
     string container;
+    students.clear();
+    teachers.clear();
+    teams.clear();
 
     studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::out);
     if (studentsSaveFile.is_open())
@@ -408,6 +411,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             students[students.size() - 1].id = stringConvertor(container);
         }
         students.erase(students.end() - 1);
+        studentsSaveFile.close();
     }
     else
     {
@@ -421,10 +425,12 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
         {
             teachers.push_back(TEACHER());
             getline(teachersSaveFile, container, ',');
-            teachers[teachers.size() - 1].lastName = container;
+            teachers[teachers.size() - 1].firstName = container;
             getline(teachersSaveFile, container, ',');
             teachers[teachers.size() - 1].lastName = container;
-            for (int i = 0; i < stringConvertor(container); i++)
+            getline(teachersSaveFile, container, ',');
+            int teamsNumber = stringConvertor(container);
+            for (int i = 0; i < teamsNumber; i++)
             {
                 getline(teachersSaveFile, container, ',');
                 teachers[teachers.size() - 1].teachingTeams.push_back(container);
@@ -433,6 +439,35 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             teachers[teachers.size() - 1].id = stringConvertor(container);
         }
         teachers.erase(teachers.end() - 1);
+        teachersSaveFile.close();
+    }
+    else
+    {
+        cerr << "Error";
+    }
+
+    teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::out);
+    if (teamsSaveFile.is_open())
+    {
+        while (!teamsSaveFile.eof())
+        {
+            teams.push_back(TEAM());
+            getline(teamsSaveFile, container, ',');
+            teams[teams.size() - 1].name = container;
+            getline(teamsSaveFile, container, ',');
+            teams[teams.size() - 1].discription = container;
+            for (int i = 0; i < 4; i++)
+            {
+                getline(teamsSaveFile, container, ',');
+                teams[teams.size() - 1].students[i] = container;
+            }
+            getline(teamsSaveFile, container, ',');
+            teams[teams.size() - 1].teacher = container;
+            getline(teamsSaveFile, container, '\n');
+            teams[teams.size() - 1].id = stringConvertor(container);
+        }
+        teams.erase(teams.end() - 1);
+        teamsSaveFile.close();
     }
     else
     {
