@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <time.h>  
+#include <sstream>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ struct TEACHER
     std::string toString()
     {
         string teacherSaveFile;
-        teacherSaveFile += firstName + ',' + lastName;
+        teacherSaveFile += firstName + ',' + lastName + ',' + to_string(teachingTeams.size());
         for (int i = 0; i < teachingTeams.size(); i++)
         {
             teacherSaveFile += ',' + teachingTeams[i];
@@ -62,244 +63,6 @@ struct TEAM
         return teacherSaveFile;
     }
 };
-
-/*void printTeams(const vector<TEAM>& teams)
-{
-    for (int i = 0; i < teams.size(); i++)
-    {
-        cout << "Name: " << teams[i].name << endl;
-        cout << "Task: " << teams[i].discription << endl;
-        cout << "Students: " << endl;
-        for (int j = 0; j < 4; j++)
-        {
-            cout << teams[i].students[j] << endl;
-        }
-    }
-}
-
-void printTeams(const vector<TEAM>& teams)
-{
-    ofstream teamsReport("teamsRepost.txt", ios::in, ios::trunc);
-    ifstream teamsName("teamNames.txt", ios::out);
-    ifstream teamDescription("teamTasks.txt", ios::out);
-    int teamNameIndex;
-    int teamDescriptionIndex;
-    for (int i = 0; i < teams.size(); i++)
-    {
-        teamNameIndex = rand() % 30;
-        teamDescriptionIndex = rand() % 30;
-
-        teamsReport << "TEAM - ";
-
-        string container;
-        for (int i = 0; i < teamNameIndex; i++)
-        {
-            getline(teamsName, container);
-        }
-        getline(teamsName, container);
-        teamsReport << container + '\n';
-
-        teamsReport << "TASK - ";
-
-        for (int i = 0; i < teamDescriptionIndex; i++)
-        {
-            getline(teamDescription, container);
-        }
-        getline(teamDescription, container);
-
-        teamsReport << container + '\n';
-
-        teamsReport << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: " + '\n';
-
-        for (int j = 0; j < 4; j++)
-        {
-            teamsReport << teams[i].students[j] + '\n';
-        }
-    }
-    
-    teamsReport.close();
-    teamsName.close();
-    teamDescription.close();
-}
-
-vector<int> findRole(const vector<STUDENT>& students, const int& studentsCount, const string wantedRole)
-{
-    vector<int> roleId;
-    for (int i = 0; i < studentsCount; i++)
-    {
-        if (students[i].role == wantedRole)
-        {
-            roleId.push_back(students[i].id);
-        }
-    }
-    return roleId;
-}
-
-int suffleIndex(const vector<STUDENT>& students, const int& studentsCount, const string wantedRole)
-{
-    vector<int> roleId;
-    roleId = findRole(students, studentsCount, wantedRole);
-    int shuffle;
-    for (int i = 0; i < roleId.size(); i++)
-    {
-        shuffle = rand() % roleId.size();
-        swap(roleId[0], roleId[shuffle]);
-    }
-    for (int i = 0; i < roleId.size(); i++)
-    {
-        if (students[i].teamStatus == "Not occupied")
-        {
-            return roleId[i];
-        }
-    }
-    cout << "Sorry but no " << wantedRole << " left";
-}
-
-void generateTeam(const vector<STUDENT>& students, const int& studentsCount, vector<TEAM>& teams, int& teamCount)
-{
-    ifstream teamsName("teamNames.txt", ios::out);
-    ifstream teamDescription("teamTasks.txt", ios::out);
-    int studentIndex;
-    teams.push_back(TEAM());
-    studentIndex = suffleIndex(students, studentsCount, "BackEnd");
-    teams[teamCount].students[0] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
-    studentIndex = suffleIndex(students, studentsCount, "FrontEnd");
-    teams[teamCount].students[1] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
-    studentIndex = suffleIndex(students, studentsCount, "QA");
-    teams[teamCount].students[2] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
-    studentIndex = suffleIndex(students, studentsCount, "Scrum");
-    teams[teamCount].students[3] = students[studentIndex].firstName + " " + students[studentIndex].LastName;
-
-    int teamNameIndex = rand() % 30;
-    int teamDescriptionIndex = rand() % 30;
-
-    string container;
-    for (int i = 0; i < teamNameIndex; i++)
-    {
-        getline(teamsName, container);
-    }
-    getline(teamsName, container);
-    teams[teamCount].name = container;
-
-    for (int i = 0; i < teamDescriptionIndex; i++)
-    {
-        getline(teamDescription, container);
-    }
-    getline(teamDescription, container);
-
-    teams[teamCount].discription = container;
-
-    teamCount++;
-    printTeams(teams);
-}
-
-void addStudent(vector<STUDENT>& students, int& studentsCount)
-{
-    cout << "How many students do you want to enter: ";
-    int quantity;
-    cin >> quantity;
-    quantity += studentsCount;
-    for (int i = studentsCount; i < quantity; i++)
-    {
-        students.push_back(STUDENT());
-        cin >> students[i].firstName;
-        cin >> students[i].LastName;
-        cin >> students[i].grade;
-        cin >> students[i].role;
-        cin >> students[i].email;
-        students[i].id = i;
-        studentsCount++;
-    }
-}
-
-void printStudents(const vector<STUDENT>& students, const int& studentsCount)
-{
-    for (int i = 0; i < studentsCount; i++)
-    {
-        cout << "First name: ";
-        cout << students[i].firstName << endl;
-        cout << "Last name: ";
-        cout << students[i].LastName << endl;
-        cout << "Grade: ";
-        cout << students[i].grade<< endl;
-        cout << "Role: ";
-        cout << students[i].role << endl;
-        cout << "Email: ";
-        cout << students[i].email << endl;
-    }
-}
-
-string makeStudentReport(const vector<STUDENT>& students, const int& studentsCount, int wantedId)
-{
-    string report;
-    report += "First name: " + students[wantedId].firstName + "\n";
-    report += "Last name: " + students[wantedId].LastName + "\n";
-    report += "Grade: " + to_string(students[wantedId].grade) + "\n";
-    report += "Role: " + students[wantedId].role + "\n";
-    report += "Email: " + students[wantedId].email + "\n";
-    report += "Id: " + to_string(students[wantedId].id) + "\n";
-
-    return report;
-}
-
-void createStudentsReport(const vector<STUDENT>& students, const int& studentsCount)
-{
-    ofstream studentReport("studentsRepost.txt",ios::in, ios::trunc);
-    if (studentReport.is_open())
-    {
-        for (int i = 0; i < studentsCount; i++)
-        {
-            studentReport << makeStudentReport(students, studentsCount, i);
-            studentReport << "\n";
-        }
-    }
-    else {
-        cout << "error";
-    }
-}
-
-void deleteStudents(vector<STUDENT>& students, int& studentsCount)
-{
-    int deleteIndex;
-    cin >> deleteIndex;
-    students.erase(students.begin() + deleteIndex);
-    studentsCount--;
-}
-
-void editStudent(vector<STUDENT>& students)
-{
-    cout << "choose index: ";
-    int index;
-    cin >> index;
-    cout << endl;
-    cout << "1. name" << endl;
-    cout << "2. lastname" << endl;
-    cout << "3. grade" << endl;
-    cout << "4. role" << endl;
-    cout << "5. email" << endl;
-    int option;
-    cin >> option;
-    switch (option)
-    {
-        case 1:
-            cin>>students[index].firstName;
-            break;
-        case 2:
-            cin >> students[index].LastName;
-            break;
-        case 3:
-            cin >> students[index].grade;
-            break;
-        case 4:
-            cin >> students[index].role;
-            break;
-        case 5:
-            cin >> students[index].email;
-            break;
-        default:
-            break;
-    }
-}*/
 
 void addStudent(vector<STUDENT>& students)
 {
@@ -347,7 +110,7 @@ int findRole(vector<STUDENT>& students, const string wantedRole)
     }
     if (roleId.size() == 0)
     {
-        cerr << "Error" << endl;//not enough students
+        cerr << "Error" << endl;
     }
     else
     {
@@ -410,12 +173,24 @@ string makeStudentsReport(const vector<STUDENT>& students)
     string report;
     for (int i = 0; i < students.size(); i++)
     {
-        report += "First name: " + students[i].firstName + '\n';
-        report += "Last name: " + students[i].lastName + '\n';
-        report += "Grade: " + to_string(students[i].grade) + '\n';
-        report += "Role: " + students[i].role + '\n';
-        report += "Email: " + students[i].email + '\n';
-        report += "Id: " + to_string(students[i].id) + '\n';
+        report += "First name: ";
+        report += students[i].firstName;
+        report += '\n';
+        report += "Last name: ";
+        report += students[i].lastName;
+        report += '\n';
+        report += "Grade: "; 
+        report += to_string(students[i].grade); 
+        report += '\n';
+        report += "Role: "; 
+        report += students[i].role; 
+        report += '\n';
+        report += "Email: ";
+        report += students[i].email;
+        report += '\n';
+        report += "Id: "; 
+        report += to_string(students[i].id);
+        report += '\n';
     }
 
     return report;
@@ -426,14 +201,22 @@ string makeTeachersReport(const vector<TEACHER>& teachers)
     string report;
     for (int i = 0; i < teachers.size(); i++)
     {
-        report += "First name: " + teachers[i].firstName + '\n';
-        report += "Last name: " + teachers[i].lastName + '\n';
-        report += "Teaching teams: " + '\n';
+        report += "First name: ";
+        report += teachers[i].firstName;
+        report += '\n';
+        report += "Last name: ";
+        report += teachers[i].lastName;
+        report += '\n';
+        report += "Teaching teams: ";
+        report += "\n";
         for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
         {
-            report += teachers[i].teachingTeams[j] + '\n';
+            report += teachers[i].teachingTeams[j];
+            report += '\n';
         }
-        report += "Id: " + to_string(teachers[i].id) + '\n';
+        report += "Id: ";
+        report += to_string(teachers[i].id);
+        report += '\n';
     }
 
     return report;
@@ -444,15 +227,25 @@ string makeTeamsReport(const vector<TEAM>& teams)
     string report;
     for (int i = 0; i < teams.size(); i++)
     {
-        report += "First name: " + teams[i].name + '\n';
-        report += "Description: " + teams[i].discription + '\n';
-        report += "Students: " + '\n';
+        report += "First name: "; 
+        report += teams[i].name;
+        report += '\n';
+        report += "Description: ";
+        report += teams[i].discription;
+        report += '\n';
+        report += "Students: ";
+        report += '\n';
         for (int j = 0; j < 4; j++)
         {
-            report += teams[i].students[j] + '\n';
+            report += teams[i].students[j];
+            report += '\n';
         }
-        report += "Teacher: " + teams[i].teacher + '\n';
-        report += "Id: " + to_string(teams[i].id) + '\n';
+        report += "Teacher: ";
+        report += teams[i].teacher;
+        report += '\n';
+        report += "Id: ";
+        report += to_string(teams[i].id);
+        report += '\n';
     }
 
     return report;
@@ -492,7 +285,7 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
     switch (option)
     {
     case 1:
-        reports.open("Reports\\studentsReport.txt", ios::in, ios::trunc);
+        reports.open("Reports\\studentsReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
             reports << makeStudentsReport(students);
@@ -503,7 +296,7 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         }
         break;
     case 2:
-        reports.open("Reports\\teachersReport.txt", ios::in, ios::trunc);
+        reports.open("Reports\\teachersReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
             reports << makeTeachersReport(teachers);
@@ -514,7 +307,7 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         }
         break;
     case 3:
-        reports.open("Reports\\teamsReport.txt", ios::in, ios::trunc);
+        reports.open("Reports\\teamsReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
             reports << makeTeamsReport(teams);
@@ -531,46 +324,115 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
 
 void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
-    ofstream studentsSaveFiles;
-    ofstream teachersSaveFiles;
-    ofstream teamsSaveFiles;
+    ofstream studentsSaveFile;
+    ofstream teachersSaveFile;
+    ofstream teamsSaveFile;
 
-    studentsSaveFiles.open("Save files\\studentsSaveFile.txt", ios::in, ios::trunc);
-    if (studentsSaveFiles.is_open())
+    studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::in | ios::trunc);
+    if (studentsSaveFile.is_open())
     {
         for (int i = 0; i < students.size(); i++)
         {
-            studentsSaveFiles << students[i].toString() << endl;
+            studentsSaveFile << students[i].toString() << endl;
         }
-        studentsSaveFiles.close();
+        studentsSaveFile.close();
     }
     else
     {
         cerr << "Error";
     }
 
-    teachersSaveFiles.open("Save files\\teachersSaveFile.txt", ios::in, ios::trunc);
-    if (teachersSaveFiles.is_open())
+    teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::in | ios::trunc);
+    if (teachersSaveFile.is_open())
     {
         for (int i = 0; i < teachers.size(); i++)
         {
-            teachersSaveFiles << teachers[i].toString() << endl;
+            teachersSaveFile << teachers[i].toString() << endl;
         }
-        teachersSaveFiles.close();
+        teachersSaveFile.close();
     }
     else
     {
         cerr << "Error";
     }
 
-    teamsSaveFiles.open("Save files\\teamsSaveFile.txt", ios::in, ios::trunc);
-    if (teamsSaveFiles.is_open())
+    teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::in | ios::trunc);
+    if (teamsSaveFile.is_open())
     {
         for (int i = 0; i < teams.size(); i++)
         {
-            teamsSaveFiles << teams[i].toString() << endl;
+            teamsSaveFile << teams[i].toString() << endl;
         }
-        teamsSaveFiles.close();
+        teamsSaveFile.close();
+    }
+    else
+    {
+        cerr << "Error";
+    }
+}
+
+int stringConvertor(string& text)
+{
+    stringstream convertor(text);
+    int number;
+    convertor >> number;
+    return number;
+}
+
+void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    ifstream studentsSaveFile;
+    ifstream teachersSaveFile;
+    ifstream teamsSaveFile;
+    string container;
+
+    studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::out);
+    if (studentsSaveFile.is_open())
+    {
+        while (!studentsSaveFile.eof())
+        {
+            students.push_back(STUDENT());
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].firstName = container;
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].lastName = container;
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].grade = stringConvertor(container);
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].role = container;
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].email = container;
+            getline(studentsSaveFile, container, ',');
+            students[students.size() - 1].teamStatus = container;
+            getline(studentsSaveFile, container, '\n');
+            students[students.size() - 1].id = stringConvertor(container);
+        }
+        students.erase(students.end() - 1);
+    }
+    else
+    {
+        cerr << "Error";
+    }
+
+    teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::out);
+    if (teachersSaveFile.is_open())
+    {
+        while (!teachersSaveFile.eof())
+        {
+            teachers.push_back(TEACHER());
+            getline(teachersSaveFile, container, ',');
+            teachers[teachers.size() - 1].lastName = container;
+            getline(teachersSaveFile, container, ',');
+            teachers[teachers.size() - 1].lastName = container;
+            for (int i = 0; i < stringConvertor(container); i++)
+            {
+                getline(teachersSaveFile, container, ',');
+                teachers[teachers.size() - 1].teachingTeams.push_back(container);
+            }
+            getline(teachersSaveFile, container, '\n');
+            teachers[teachers.size() - 1].id = stringConvertor(container);
+        }
+        teachers.erase(teachers.end() - 1);
     }
     else
     {
@@ -589,8 +451,10 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     cout << "7. Save" << endl;
     cout << "8. Open last save" << endl;
     cout << "9. Exit" << endl;
+
     int option;
     cin >> option;
+
     switch (option)
     {
         case 1:
@@ -621,6 +485,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 8:
+            openSave(students, teachers, teams);
             return true;
             break;
         case 9:

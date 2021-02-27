@@ -1,0 +1,2 @@
+GrudskI,Write a function in C++ that takes an integer i and returns a string with the integer backwards followed by the original integer.,Kaloyana1 Dinev,Stanislav Todorov,Martin Bakalov,Aleksandar1 Patrashkov,petyr georgiev,0
+vs7heC0de,Write a program in C to replace a specific line with another text in a file.,Kaloyan Dinev,Stanislav1 Todorov,Martin1 Bakalov,Aleksandar Patrashkov,petyr georgiev,1

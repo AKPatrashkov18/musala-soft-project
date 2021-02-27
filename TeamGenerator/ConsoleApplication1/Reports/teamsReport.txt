@@ -1,17 +1,16 @@
-First name: The Shield UK
-Description: Write a program in C# Sharp to declares a struct with a property, a method, and a private field.
+First name: Shooting Stars
+Description: Write the regular expression that will match all non-digit characters of a string. Use the character class \D in your expression. (in Python)
 Kaloyana1 Dinev
-Stanislav1 Todorov
-Martin Bakalov
-Aleksandar1 Patrashkov
-Teacher: 1 1
-Id: 0
-First name: 
-Description: Create a function in JavaScript that takes an array of numbers and return "Boom!" if the digit 7 appears in the array. Otherwise, return "there is no 7 in the array".
-Kaloyan Dinev
 Stanislav Todorov
-Martin1 Bakalov
+Martin Bakalov
 Aleksandar Patrashkov
-Teacher: 1 1
+Teacher: è•‚Í‡ É•Æ‡£®•¢
+Id: 0
+First name: vs7heC0de
+Description: Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.
+Kaloyan Dinev
+Stanislav1 Todorov
+Martin1 Bakalov
+Aleksandar1 Patrashkov
+Teacher: è•‚Í‡ É•Æ‡£®•¢
 Id: 1
-
