@@ -11,7 +11,7 @@ struct STUDENT
 {
     string firstName;
     string lastName;
-    int grade;
+    int grade = 0;
     string role;
     string email;
     string teamStatus;
@@ -158,8 +158,9 @@ void generateTeam(vector<STUDENT>& students, vector<TEAM>& teams, vector<TEACHER
             getline(teamDescription, container);
         }
         getline(teamDescription, container);
-
         teams[teams.size() - 1].discription = container;
+
+        teams[teams.size() - 1].status = "In use";
 
         int randomIndex = rand() % teachers.size();
         teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName;
@@ -472,6 +473,21 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     else
     {
         cerr << "Error";
+    }
+}
+
+void archiveTeam(vector<TEAM>& teams)
+{
+    cout << makeTeamsReport(teams);
+    cout << "Choose index: ";
+    int index;
+    cin >> index;
+    if (index < 0 or index > teams.size() - 1)
+    {
+        cerr << "Error";
+    }
+    else {
+        teams[index].status = "Archived";
     }
 }
 
