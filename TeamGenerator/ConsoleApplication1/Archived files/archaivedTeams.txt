@@ -1,0 +1,9 @@
+First name: vs7heC0de
+Description: Write a program in Python that asks the user how many Fibonnaci numbers to generate and then generates them. Take this opportunity to think about how you can use functions. Make sure to ask the user to enter the number of numbers in the sequence to generate.
+Students: 
+Kaloyan Dinev
+Stanislav Todorov
+Martin Bakalov
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 0

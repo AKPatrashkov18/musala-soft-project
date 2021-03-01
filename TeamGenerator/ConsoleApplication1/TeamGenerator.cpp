@@ -223,31 +223,28 @@ string makeTeachersReport(const vector<TEACHER>& teachers)
     return report;
 }
 
-string makeTeamsReport(const vector<TEAM>& teams)
+string makeTeamsReport(const vector<TEAM>& teams, int wantedIndex)
 {
     string report;
-    for (int i = 0; i < teams.size(); i++)
+    report += "First name: "; 
+    report += teams[wantedIndex].name;
+    report += '\n';
+    report += "Description: ";
+    report += teams[wantedIndex].discription;
+    report += '\n';
+    report += "Students: ";
+    report += '\n';
+    for (int j = 0; j < 4; j++)
     {
-        report += "First name: "; 
-        report += teams[i].name;
-        report += '\n';
-        report += "Description: ";
-        report += teams[i].discription;
-        report += '\n';
-        report += "Students: ";
-        report += '\n';
-        for (int j = 0; j < 4; j++)
-        {
-            report += teams[i].students[j];
-            report += '\n';
-        }
-        report += "Teacher: ";
-        report += teams[i].teacher;
-        report += '\n';
-        report += "Id: ";
-        report += to_string(teams[i].id);
+        report += teams[wantedIndex].students[j];
         report += '\n';
     }
+    report += "Teacher: ";
+    report += teams[wantedIndex].teacher;
+    report += '\n';
+    report += "Id: ";
+    report += to_string(teams[wantedIndex].id);
+    report += '\n';
 
     return report;
 }
@@ -265,7 +262,10 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
             cout << makeStudentsReport(students);
             break;
         case 2:
-            cout << makeTeamsReport(teams);
+            for (int i = 0; i < teams.size(); i++)
+            {
+                cout << makeTeamsReport(teams, i);
+            }
             break;
         case 3:
             cout << makeTeachersReport(teachers);
@@ -311,7 +311,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         reports.open("Reports\\teamsReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
-            reports << makeTeamsReport(teams);
+            for (int i = 0; i < teams.size(); i++)
+            {
+                reports << makeTeamsReport(teams,i);
+            }
             reports.close();
         }
         else {
@@ -320,6 +323,22 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         break;
     default:
         break;
+    }
+}
+
+void saveArchivedTeams(const vector<TEAM>& teams)
+{
+    ofstream archaivedTeams;
+    archaivedTeams.open("Archived files\\archaivedTeams.txt", ios::in | ios::trunc);
+    if (archaivedTeams.is_open())
+    {
+        for (int i = 0; i < teams.size(); i++)
+        {
+            if (teams[i].status == "Archived")
+            {
+                archaivedTeams << makeTeamsReport(teams, i);
+            }
+        }
     }
 }
 
@@ -370,6 +389,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     {
         cerr << "Error";
     }
+    saveArchivedTeams(teams);
 }
 
 int stringConvertor(string& text)
@@ -478,7 +498,10 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
 
 void archiveTeam(vector<TEAM>& teams)
 {
-    cout << makeTeamsReport(teams);
+    for (int i = 0; i < teams.size(); i++)
+    {
+        cout << makeTeamsReport(teams, i);
+    }
     cout << "Choose index: ";
     int index;
     cin >> index;
@@ -501,7 +524,8 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     cout << "6. Edit student, teacher or a team" << endl;
     cout << "7. Save" << endl;
     cout << "8. Open last save" << endl;
-    cout << "9. Exit" << endl;
+    cout << "9. Archive team" << endl;
+    cout << "0. Exit" << endl;
 
     int option;
     cin >> option;
@@ -540,6 +564,9 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 9:
+            archiveTeam(teams);
+            return true;
+        case 0:
             return false;
             break;
         default:
