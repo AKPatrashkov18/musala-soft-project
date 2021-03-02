@@ -1,8 +1,8 @@
-Stanislav,Todorov,10,FrontEnd,SAT@,Occupied,0
-Aleksandar,Patrashkov,10,Scrum,AKP@,Occupied,1
-Martin,Bakalov,10,QA,MB@,Occupied,2
-Kaloyan,Dinev,10,BackEnd,kdd@,Occupied,3
-Stanislav1,Todorov,10,FrontEnd,SAT@,Occupied,4
-Aleksandar1,Patrashkov,10,Scrum,AKP@,Occupied,5
-Martin1,Bakalov,10,QA,MB@,Occupied,6
-Kaloyana1,Dinev,10,BackEnd,kdd@,Occupied,7
+Stanislav,Todorov,10,FrontEnd,SAT@,WolfGang,0
+Aleksandar,Patrashkov,10,Scrum,AKP@,Ninjas,1
+Martin,Bakalov,10,QA,MB@,WolfGang,2
+Kaloyan,Dinev,10,BackEnd,kdd@,WolfGang,3
+Stanislav1,Todorov,10,FrontEnd,SAT@,Ninjas,4
+Aleksandar1,Patrashkov,10,Scrum,AKP@,WolfGang,5
+Martin1,Bakalov,10,QA,MB@,Ninjas,6
+Kaloyana1,Dinev,10,BackEnd,kdd@,Ninjas,7

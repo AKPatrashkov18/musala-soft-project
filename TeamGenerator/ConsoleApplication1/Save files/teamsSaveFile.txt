@@ -1,2 +1,2 @@
-Team Gravity,Write a JavaScript function which returns the n rows by n columns identity matrix.,Kaloyana1 Dinev,Stanislav Todorov,Martin Bakalov,Aleksandar PatrashkovArchived,1 1,0
-The Titans,Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.,Kaloyan Dinev,Stanislav1 Todorov,Martin1 Bakalov,Aleksandar1 PatrashkovIn use,1 1,1
+Ninjas,Write a C program to accept two integers and check whether they are equal or not.,Kaloyana1 Dinev,Stanislav1 Todorov,Martin1 Bakalov,Aleksandar Patrashkov,petar georgiev,0
+WolfGang,Write a C program to count the number of two 5's are next to each other in an array of integers. Also count the situation where the second 5 is actually a 6.,Kaloyan Dinev,Stanislav Todorov,Martin Bakalov,Aleksandar1 Patrashkov,petar georgiev,1
