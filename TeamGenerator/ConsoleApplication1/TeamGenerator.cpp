@@ -19,8 +19,24 @@ struct STUDENT
 
     std::string toString()
     {
-        return firstName + ',' + lastName + ',' + to_string(grade) + ',' + role + ',' + email + ',' + teamStatus + ',' + to_string(id);
+        string studentSaveFile;
+        studentSaveFile += firstName;
+        studentSaveFile += ',';
+        studentSaveFile += lastName;
+        studentSaveFile += ',';
+        studentSaveFile += to_string(grade);
+        studentSaveFile += ',';
+        studentSaveFile += role;
+        studentSaveFile += ',';
+        studentSaveFile += email;
+        studentSaveFile += ',';
+        studentSaveFile += teamStatus;
+        studentSaveFile += ',';
+        studentSaveFile += to_string(id);
+
+        return studentSaveFile;
     }
+
 };
 
 struct TEACHER
@@ -32,12 +48,18 @@ struct TEACHER
     std::string toString()
     {
         string teacherSaveFile;
-        teacherSaveFile += firstName + ',' + lastName + ',' + to_string(teachingTeams.size());
+        teacherSaveFile += firstName; 
+        teacherSaveFile += ','; 
+        teacherSaveFile += lastName;
+        teacherSaveFile += ',';
+        teacherSaveFile += to_string(teachingTeams.size());
         for (int i = 0; i < teachingTeams.size(); i++)
         {
-            teacherSaveFile += ',' + teachingTeams[i];
+            teacherSaveFile += ',';
+            teacherSaveFile += teachingTeams[i];
         }
-        teacherSaveFile += ',' + to_string(id);
+        teacherSaveFile += ','; 
+        teacherSaveFile += to_string(id);
         return teacherSaveFile;
     }
 };
@@ -53,15 +75,29 @@ struct TEAM
     int id = 0;
     std::string toString()
     {
-        string teacherSaveFile;
-        teacherSaveFile += name + ',' + discription;
+        string temaSaveFile;
+        temaSaveFile += name;
+        temaSaveFile += ',';
+        temaSaveFile += discription;
         for (int i = 0; i < 4; i++)
         {
-            teacherSaveFile += ',' + students[i];
+            temaSaveFile += ','; 
+            temaSaveFile += students[i];
         }
-        teacherSaveFile += status + ',' + teacher + ',' + to_string(id);
-        return teacherSaveFile;
+        temaSaveFile += status; 
+        temaSaveFile += ','; 
+        temaSaveFile += teacher; 
+        temaSaveFile += ','; 
+        temaSaveFile += to_string(id);
+        return temaSaveFile;
     }
+};
+
+struct SCHOOL 
+{
+    string name;
+    vector<string> studentsName;
+    vector<string> teachersName;
 };
 
 void addStudent(vector<STUDENT>& students)
@@ -169,57 +205,50 @@ void generateTeam(vector<STUDENT>& students, vector<TEAM>& teams, vector<TEACHER
     }
 }
 
-string makeStudentsReport(const vector<STUDENT>& students)
+string makeStudentsReport(const vector<STUDENT>& students, int wantedIndex)
 {
     string report;
-    for (int i = 0; i < students.size(); i++)
-    {
-        report += "First name: ";
-        report += students[i].firstName;
-        report += '\n';
-        report += "Last name: ";
-        report += students[i].lastName;
-        report += '\n';
-        report += "Grade: "; 
-        report += to_string(students[i].grade); 
-        report += '\n';
-        report += "Role: "; 
-        report += students[i].role; 
-        report += '\n';
-        report += "Email: ";
-        report += students[i].email;
-        report += '\n';
-        report += "Id: "; 
-        report += to_string(students[i].id);
-        report += '\n';
-    }
+    report += "First name: ";
+    report += students[wantedIndex].firstName;
+    report += '\n';
+    report += "Last name: ";
+    report += students[wantedIndex].lastName;
+    report += '\n';
+    report += "Grade: "; 
+    report += to_string(students[wantedIndex].grade);
+    report += '\n';
+    report += "Role: "; 
+    report += students[wantedIndex].role;
+    report += '\n';
+    report += "Email: ";
+    report += students[wantedIndex].email;
+    report += '\n';
+    report += "Id: "; 
+    report += to_string(students[wantedIndex].id);
+    report += '\n';
 
     return report;
 }
 
-string makeTeachersReport(const vector<TEACHER>& teachers)
+string makeTeachersReport(const vector<TEACHER>& teachers, int wantedIndex)
 {
     string report;
-    for (int i = 0; i < teachers.size(); i++)
+    report += "First name: ";
+    report += teachers[wantedIndex].firstName;
+    report += '\n';
+    report += "Last name: ";
+    report += teachers[wantedIndex].lastName;
+    report += '\n';
+    report += "Teaching teams: ";
+    report += "\n";
+    for (int j = 0; j < teachers[wantedIndex].teachingTeams.size(); j++)
     {
-        report += "First name: ";
-        report += teachers[i].firstName;
-        report += '\n';
-        report += "Last name: ";
-        report += teachers[i].lastName;
-        report += '\n';
-        report += "Teaching teams: ";
-        report += "\n";
-        for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
-        {
-            report += teachers[i].teachingTeams[j];
-            report += '\n';
-        }
-        report += "Id: ";
-        report += to_string(teachers[i].id);
+        report += teachers[wantedIndex].teachingTeams[j];
         report += '\n';
     }
-
+    report += "Id: ";
+    report += to_string(teachers[wantedIndex].id);
+    report += '\n';
     return report;
 }
 
@@ -249,6 +278,30 @@ string makeTeamsReport(const vector<TEAM>& teams, int wantedIndex)
     return report;
 }
 
+string makeSchoolReport(const SCHOOL& school)
+{
+    string report;
+    report += "School name: ";
+    report += school.name;
+    report += '\n';
+    report += "Students: ";
+    report += '\n';
+    for (int i = 0; i < school.studentsName.size(); i++)
+    {
+        report += school.studentsName[i];
+        report += '\n';
+    }
+    report += "Teachers: ";
+    report += '\n';
+    for (int i = 0; i < school.teachersName.size(); i++)
+    {
+        report += school.teachersName[i];
+        report += '\n';
+    }
+
+    return report;
+}
+
 void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams)
 {
     cout << "1. Print students" << endl;
@@ -259,7 +312,10 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
     switch (option)
     {
         case 1:
-            cout << makeStudentsReport(students);
+            for (int i = 0; i < students.size(); i++)
+            {
+                cout << makeStudentsReport(students, i);
+            }
             break;
         case 2:
             for (int i = 0; i < teams.size(); i++)
@@ -268,19 +324,25 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
             }
             break;
         case 3:
-            cout << makeTeachersReport(teachers);
+            for (int i = 0; i < teachers.size(); i++)
+            {
+                cout << makeTeachersReport(teachers, i);
+            }
             break;
         default:
             break;
     }
 }
 
-void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams)
+
+
+void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams, const SCHOOL& school)
 {
     ofstream reports;
     cout << "1. Create students reports" << endl;
     cout << "2. Create teachers report" << endl;
     cout << "3. Create teams report" << endl;
+    cout << "4. Create school report" << endl;
     int option;
     cin >> option;
     switch (option)
@@ -289,7 +351,11 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         reports.open("Reports\\studentsReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
-            reports << makeStudentsReport(students);
+            for (int i = 0; i < students.size(); i++)
+            {
+                reports << makeStudentsReport(students, i);
+            }
+            
             reports.close();
         }
         else {
@@ -300,7 +366,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         reports.open("Reports\\teachersReport.txt", ios::in | ios::trunc);
         if (reports.is_open())
         {
-            reports << makeTeachersReport(teachers);
+            for (int i = 0; i < teachers.size(); i++)
+            {
+                reports << makeTeachersReport(teachers, i);
+            }  
             reports.close();
         }
         else {
@@ -315,6 +384,17 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
             {
                 reports << makeTeamsReport(teams,i);
             }
+            reports.close();
+        }
+        else {
+            cerr << "Error";
+        }
+        break;
+    case 4:
+        reports.open("Reports\\schoolReport.txt", ios::in | ios::trunc);
+        if (reports.is_open())
+        {
+            reports << makeSchoolReport(school);
             reports.close();
         }
         else {
@@ -514,7 +594,7 @@ void archiveTeam(vector<TEAM>& teams)
     }
 }
 
-bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
 {
     cout << "1. Add students" << endl;
     cout << "2. Add teacher" << endl;
@@ -549,7 +629,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 5:
-            reportsMenu(students, teachers, teams);
+            reportsMenu(students, teachers, teams, school);
             return true;
             break;
         case 6:
@@ -570,7 +650,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return false;
             break;
         default:
-            return mainMenu(students, teachers, teams);
+            return mainMenu(students, teachers, teams, school);
 
     }
 }
@@ -581,9 +661,10 @@ int main()
     vector<STUDENT> students;
     vector<TEACHER> teachers;
     vector<TEAM> teams;
+    SCHOOL school;
     bool exit=false;
     do {
-        exit = mainMenu(students, teachers, teams);
+        exit = mainMenu(students, teachers, teams, school);
     } while (exit);
 }
 

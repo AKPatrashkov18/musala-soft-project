@@ -1,5 +1,6 @@
-First name: Петър
-Last name: Георгиев
-eams: Shooting Stars
-vs7heC0de
+First name: 1
+Last name: 1
+Teaching teams: 
+Team Gravity
+The Titans
 Id: 0

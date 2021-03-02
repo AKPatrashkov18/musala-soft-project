@@ -1,16 +1,18 @@
-First name: Shooting Stars
-Description: Write the regular expression that will match all non-digit characters of a string. Use the character class \D in your expression. (in Python)
+First name: Team Gravity
+Description: Write a JavaScript function which returns the n rows by n columns identity matrix.
+Students: 
 Kaloyana1 Dinev
 Stanislav Todorov
 Martin Bakalov
 Aleksandar Patrashkov
-Teacher: Петър Георгиев
+Teacher: 1 1
 Id: 0
-First name: vs7heC0de
+First name: The Titans
 Description: Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.
+Students: 
 Kaloyan Dinev
 Stanislav1 Todorov
 Martin1 Bakalov
 Aleksandar1 Patrashkov
-Teacher: Петър Георгиев
+Teacher: 1 1
 Id: 1
