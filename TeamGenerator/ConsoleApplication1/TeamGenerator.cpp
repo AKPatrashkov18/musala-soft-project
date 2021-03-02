@@ -4,6 +4,8 @@
 #include <vector>
 #include <time.h>  
 #include <sstream>
+#include <chrono> 
+#include <ctime> 
 
 using namespace std;
 
@@ -15,7 +17,7 @@ struct STUDENT
     string role;
     string email;
     string teamStatus;
-    int id = 0;
+    size_t id = 0;
 
     std::string toString()
     {
@@ -44,7 +46,7 @@ struct TEACHER
     string firstName;
     string lastName;
     vector<string> teachingTeams;
-    int id = 0;
+    size_t id = 0;
     std::string toString()
     {
         string teacherSaveFile;
@@ -69,9 +71,9 @@ struct TEAM
     string name;
     string discription;
     string date;
-    string students[4];
+    vector<string> students;
     string teacher;
-    int id = 0;
+    size_t id = 0;
     std::string toString()
     {
         string temaSaveFile;
@@ -101,10 +103,10 @@ struct SCHOOL
 void addStudent(vector<STUDENT>& students)
 {
     cout << "How many students do you want to enter: ";
-    int quantity;
+    size_t quantity;
     cin >> quantity;
     quantity += students.size();
-    for (int i = students.size(); i < quantity; i++)
+    for (size_t i = students.size(); i < quantity; i++)
     {
         students.push_back(STUDENT());
         cin >> students[i].firstName;
@@ -120,10 +122,10 @@ void addStudent(vector<STUDENT>& students)
 void addTeachers(vector<TEACHER>& teachers)
 {
     cout << "How many teachers do you want to enter: ";
-    int quantity;
+    size_t quantity;
     cin >> quantity;
     quantity += teachers.size();
-    for (int i = teachers.size(); i < quantity; i++)
+    for (size_t i = teachers.size(); i < quantity; i++)
     {
         teachers.push_back(TEACHER());
         cin >> teachers[i].firstName;
@@ -159,47 +161,64 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     }
 }
 
-void generateTeam(vector<STUDENT>& students, vector<TEAM>& teams, vector<TEACHER>& teachers)
+void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
-    ifstream teamsName("Data Files\\teamNames.txt");
-    ifstream teamDescription("Data Files\\teamTasks.txt");
+    ifstream teamName;
+    ifstream teamTask;
     int studentIndex;
-    for (int i = 0; i < students.size() / 4; i++)
+    string container;
+    teamName.open("Data files\\teamNames.txt", ios::out);
+    teamTask.open("Data files\\teamTasks.txt", ios::out);
+    if (teamName.is_open() and teamTask.is_open())
     {
-        teams.push_back(TEAM());
-
-        int teamNameIndex = rand() % 30;
-        int teamDescriptionIndex = rand() % 30;
-
-        string container;
-        for (int i = 0; i < teamNameIndex; i++)
+        for (size_t i = 0; i < students.size() / 4; i++)
         {
-            getline(teamsName, container);
+            teams.push_back(TEAM());
+            int teamNameIndex = rand() % 29;
+            int teamTaskIndex = rand() % 29;
+            for (int i = 0; i < teamNameIndex; i++)
+            {
+                getline(teamName, container);
+            }
+            teams[teams.size() - 1].name = container;
+
+            for (int i = 0; i < teamTaskIndex; i++)
+            {
+                getline(teamTask, container);
+            }
+            teams[teams.size() - 1].discription = container;
+
+            time_t now = time(0);
+            container = time(&now);
+
+            teams[teams.size() - 1].date = container;
+
+            studentIndex = findRole(students, "BackEnd", teams[teams.size() - 1].name);
+            teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
+            studentIndex = findRole(students, "FrontEnd", teams[teams.size() - 1].name);
+            teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
+            studentIndex = findRole(students, "QA", teams[teams.size() - 1].name);
+            teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
+            studentIndex = findRole(students, "Scrum", teams[teams.size() - 1].name);
+            teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
+
+            int randomIndex = rand() % teachers.size();
+            teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName;
+            teams[teams.size() - 1].id = teams.size() - 1;
+            teachers[randomIndex].teachingTeams.push_back(teams[teams.size() - 1].name);
+
+            teamName.clear();
+            teamName.seekg(0, ios::beg);
+
+            teamTask.clear();
+            teamTask.seekg(0, ios::beg);
         }
-        getline(teamsName, container);
-        teams[teams.size() - 1].name = container;
-
-        for (int i = 0; i < teamDescriptionIndex; i++)
-        {
-            getline(teamDescription, container);
-        }
-        getline(teamDescription, container);
-        teams[teams.size() - 1].discription = container;
-
-        studentIndex = findRole(students, "BackEnd", teams[teams.size() - 1].name);
-        teams[teams.size() - 1].students[0] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
-        studentIndex = findRole(students, "FrontEnd", teams[teams.size() - 1].name);
-        teams[teams.size() - 1].students[1] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
-        studentIndex = findRole(students, "QA", teams[teams.size() - 1].name);
-        teams[teams.size() - 1].students[2] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
-        studentIndex = findRole(students, "Scrum", teams[teams.size() - 1].name);
-        teams[teams.size() - 1].students[3] = students[studentIndex].firstName + " " + students[studentIndex].lastName;
-
-        int randomIndex = rand() % teachers.size();
-        teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName;
-        teams[teams.size() - 1].id = teams.size() - 1;
-        teachers[randomIndex].teachingTeams.push_back(teams[teams.size() - 1].name);
     }
+    else
+    {
+        cerr << "Error";
+    }
+
 }
 
 string makeStudentsReport(const vector<STUDENT>& students, int wantedIndex)
@@ -260,7 +279,7 @@ string makeTeamsReport(const vector<TEAM>& teams, int wantedIndex)
     report += '\n';
     report += "Students: ";
     report += '\n';
-    for (int j = 0; j < teams.size(); j++)
+    for (int j = 0; j < teams[wantedIndex].students.size(); j++)
     {
         report += teams[wantedIndex].students[j];
         report += '\n';
@@ -654,7 +673,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 3:
-            generateTeam(students, teams, teachers);
+            generateTeam(students, teachers, teams);
             return true;
             break;
         case 4:

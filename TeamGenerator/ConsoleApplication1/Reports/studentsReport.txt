@@ -46,3 +46,27 @@ Grade: 10
 Role: BackEnd
 Email: kdd@
 Id: 7
+First name: Stanisla23
+Last name: Todorov23
+Grade: 10
+Role: FrontEnd
+Email: SAT@
+Id: 8
+First name: Aleksandar123
+Last name: Patrashkov23
+Grade: 10
+Role: Scrum
+Email: AKP@
+Id: 9
+First name: Martin123
+Last name: Bakalov23
+Grade: 10
+Role: QA
+Email: MB@
+Id: 10
+First name: Kaloyana123
+Last name: Dinev23
+Grade: 10
+Role: BackEnd
+Email: kdd@
+Id: 11
