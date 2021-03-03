@@ -161,6 +161,19 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     }
 }
 
+int findNotOccupiedStudents(vector<STUDENT>& students)
+{
+    int notOccupiedCount = 0;
+    for (int i = 0; i < students.size(); i++)
+    {
+        if (students[i].teamStatus == "Not occupied")
+        {
+            notOccupiedCount++;
+        }
+    }
+    return notOccupiedCount;
+}
+
 void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
     ifstream teamName;
@@ -169,9 +182,10 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
     string container;
     teamName.open("Data files\\teamNames.txt", ios::out);
     teamTask.open("Data files\\teamTasks.txt", ios::out);
+    int notOccupiedCount = findNotOccupiedStudents(students);
     if (teamName.is_open() and teamTask.is_open())
     {
-        for (size_t i = 0; i < students.size() / 4; i++)
+        for (size_t i = 0; i < notOccupiedCount / 4; i++)
         {
             teams.push_back(TEAM());
             int teamNameIndex = rand() % 29;

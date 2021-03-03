@@ -1,0 +1,117 @@
+First name: KingPins
+Description: Write a program in C# Sharp to implement a method that returns a structure including calling the method and using its value.
+Students: 
+Kaloyan Dinev
+Stanisla23 Todorov23
+Martin1 Bakalov
+Aleksandar123 Patrashkov23
+Teacher: 1 1
+Id: 0
+First name: Hot Shots
+Description: Create a function in C++ that takes two integers and checks if they are equal. 
+Students: 
+Kaloyana123 Dinev23
+Stanislav Todorov
+Martin Bakalov
+Aleksandar1 Patrashkov
+Teacher: 2 2
+Id: 2
+First name: Warriors
+Description: Write a C program to read the value of an integer m and display the value of n is 1 when m is larger than 0, 0 when m is 0 and -1 when m is less than 0.
+Students: 
+Kaloyana1 Dinev
+Stanislav Todorov
+Martin123 Bakalov23
+Aleksandar1 Patrashkov
+Teacher: 1 1
+Id: 1
+First name: Unlimited RP
+Description: Write a C program to read the value of an integer m and display the value of n is 1 when m is larger than 0, 0 when m is 0 and -1 when m is less than 0.
+Students: 
+Kaloyan Dinev
+Stanisla23 Todorov23
+Martin Bakalov
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 2
+First name: GrudskI
+Description: Create a function in Python that takes a number as an argument and returns negative of that number. Return negative numbers without any change.
+Students: 
+Kaloyana123 Dinev23
+Stanislav1 Todorov
+Martin1 Bakalov
+Aleksandar123 Patrashkov23
+Teacher: 2 2
+Id: 0
+First name: Dream Crushers
+Description: Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.
+Students: 
+Kaloyana1 Dinev
+Stanislav Todorov
+Martin123 Bakalov23
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 1
+First name: Icons
+Description: Create a function in Python that takes a base number and an exponent number and returns the calculation.
+Students: 
+Kaloyana123 Dinev23
+Stanislav1 Todorov
+Martin Bakalov
+Aleksandar1 Patrashkov
+Teacher: 2 2
+Id: 2
+First name: Ninjas
+Description: Write a program in C to copy a file in another name.
+Students: 
+Kaloyan Dinev
+Stanisla23 Todorov23
+Martin1 Bakalov
+Aleksandar123 Patrashkov23
+Teacher: 2 2
+Id: 0
+First name: The Best of The Best
+Description: Write a JavaScript program to compute the sum of the two given integers, If the sum is in the range 50..80 return 65 other wise return 80.
+Students: 
+Kaloyana123 Dinev23
+Stanislav1 Todorov
+Martin123 Bakalov23
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 1
+First name: RebelSS
+Description: Write a C program to read the value of an integer m and display the value of n is 1 when m is larger than 0, 0 when m is 0 and -1 when m is less than 0.
+Students: 
+Kaloyan Dinev
+Stanislav Todorov
+Martin123 Bakalov23
+Aleksandar1 Patrashkov
+Teacher: 2 2
+Id: 1
+First name: RebelSS
+Description: Create a function in JavaScript that takes an array of numbers and return "Boom!" if the digit 7 appears in the array. Otherwise, return "there is no 7 in the array".
+Students: 
+Kaloyana1 Dinev
+Stanisla23 Todorov23
+Martin1 Bakalov
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 2
+First name: WarShips
+Description: Write the regular expression that will match all non-digit characters of a string. Use the character class \D in your expression. (in Python)
+Students: 
+Kaloyana123 Dinev23
+Stanisla23 Todorov23
+Martin1 Bakalov
+Aleksandar1 Patrashkov
+Teacher: 2 2
+Id: 2
+First name: Ninjas
+Description: Write the regular expression that will match all non-digit characters of a string. Use the character class \D in your expression. (in Python)
+Students: 
+Kaloyan Dinev
+Stanislav Todorov
+Martin Bakalov
+Aleksandar123 Patrashkov23
+Teacher: 2 2
+Id: 2
