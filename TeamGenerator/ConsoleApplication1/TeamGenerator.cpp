@@ -268,6 +268,9 @@ string makeStudentsReport(const vector<STUDENT>& students, int wantedIndex)
     report += "Email: ";
     report += students[wantedIndex].email;
     report += '\n';
+    report += "Team: ";
+    report += students[wantedIndex].teamStatus;
+    report += '\n';
     report += "Id: "; 
     report += to_string(students[wantedIndex].id);
     report += '\n';
@@ -588,7 +591,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             for (int i = 0; i < 4; i++)
             {
                 getline(teamsSaveFile, container, ',');
-                teams[teams.size() - 1].students[i] = container;
+                teams[teams.size() - 1].students.push_back(container);
             }
             getline(teamsSaveFile, container, ',');
             teams[teams.size() - 1].teacher = container;
@@ -616,7 +619,7 @@ bool checkId(const vector<TEAM>& teams, const int wantedId)
     return false;
 }
 
-int findId(const vector<TEAM>& teams, const int wantedId)
+int findTeamId(const vector<TEAM>& teams, const int wantedId)
 {
     for (int i = 0; i < teams.size(); i++)
     {
@@ -628,15 +631,34 @@ int findId(const vector<TEAM>& teams, const int wantedId)
     return 0;
 }
 
-void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+int findStudentId(const vector<STUDENT>& students, const int wantedId)
 {
-    for (int i = 0; i < teams.size(); i++)
+    for (int i = 0; i < students.size(); i++)
     {
-        cout << makeTeamsReport(teams, i);
+        if (wantedId == students[i].id)
+        {
+            return i;
+        }
     }
-    cout << "Choose index: ";
+    return 0;
+}
+
+void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPerson = false, int indexOfremovedPerson = 0)
+{
     int index;
-    index = inputValidation();
+    if (removedPerson)
+    {
+        index = indexOfremovedPerson;
+    }
+    else
+    {
+        for (int i = 0; i < teams.size(); i++)
+        {
+            cout << makeTeamsReport(teams, i);
+        }
+        cout << "Choose index: ";
+        index = inputValidation();
+    }
     if (!checkId(teams, index))
     {
         cerr << "Error";
@@ -646,14 +668,14 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         archaivedTeams.open("Archived files\\archaivedTeams.txt", ios::in | ios::ate);
         if (archaivedTeams.is_open())
         {
-            archaivedTeams << makeTeamsReport(teams, findId(teams, index));
+            archaivedTeams << makeTeamsReport(teams, findTeamId(teams, index));
             archaivedTeams.close();
         }
         for (int i = 0; i < teachers.size(); i++)
         {
             for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
             {
-                if (teachers[i].teachingTeams[j] == teams[findId(teams, index)].name)
+                if (teachers[i].teachingTeams[j] == teams[findTeamId(teams, index)].name)
                 {
                     teachers[i].teachingTeams.erase(teachers[i].teachingTeams.begin() + j);
                     break;
@@ -662,26 +684,48 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         for (int i = 0; i < students.size(); i++)
         {
-            if (students[i].teamStatus == teams[findId(teams, index)].name)
+            if (students[i].teamStatus == teams[findTeamId(teams, index)].name)
             {
                 students[i].teamStatus = "Not occupied";
             }
         }
-        teams.erase(teams.begin() + findId(teams, index));
+        teams.erase(teams.begin() + findTeamId(teams, index));
     }
 }
+
+void deleteStudents(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    for (int i = 0; i < students.size(); i++)
+    {
+        cout << makeStudentsReport(students, i);
+    }
+    cout << "Enter an index of a student you want to delete: ";
+    int deleteIndex = inputValidation();
+
+    for (int i = 0; i < teams.size(); i++)
+    {
+        if (teams[i].name == students[deleteIndex].teamStatus)
+        {
+            archiveTeam(students, teachers, teams, true, findStudentId(students,i));
+            break;
+        }
+    }
+    students.erase(students.begin() + deleteIndex); 
+}
+
 
 bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
 {
     cout << "1. Add students" << endl;
     cout << "2. Add teacher" << endl;
     cout << "3. Generate teams" << endl;
-    cout << "4. Print teams, students or teachers" << endl;
-    cout << "5. Create teams, students or teachers reposrts" << endl;
-    cout << "6. Edit student, teacher or a team" << endl;
+    cout << "4. Print menu" << endl;
+    cout << "5. Create reposrt menu" << endl;
+    cout << "6. Edit menu" << endl;
     cout << "7. Save" << endl;
     cout << "8. Open last save" << endl;
     cout << "9. Archive team" << endl;
+    cout << "10. Delete student" << endl;
     cout << "0. Exit" << endl;
 
     switch (inputValidation())
@@ -719,6 +763,9 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             break;
         case 9:
             archiveTeam(students, teachers, teams);
+            return true;
+        case 10:
+            deleteStudents(students, teachers, teams);
             return true;
         case 0:
             return false;

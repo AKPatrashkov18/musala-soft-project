@@ -1,12 +1,12 @@
-Stanislav,Todorov,10,FrontEnd,SAT@,RebelSS,0
-Aleksandar,Patrashkov,10,Scrum,AKP@,RamSsS,1
-Martin,Bakalov,10,QA,MB@,vs7heC0de,2
-Kaloyan,Dinev,10,BackEnd,kdd@,RamSsS,3
-Stanislav1,Todorov,10,FrontEnd,SAT@,vs7heC0de,4
-Aleksandar1,Patrashkov,10,Scrum,AKP@,RebelSS,5
-Martin1,Bakalov,10,QA,MB@,RamSsS,6
-Kaloyana1,Dinev,10,BackEnd,kdd@,vs7heC0de,7
-Stanisla23,Todorov23,10,FrontEnd,SAT@,RamSsS,8
-Aleksandar123,Patrashkov23,10,Scrum,AKP@,vs7heC0de,9
-Martin123,Bakalov23,10,QA,MB@,RebelSS,10
-Kaloyana123,Dinev23,10,BackEnd,kdd@,RebelSS,11
+Stanislav,Todorov,10,FrontEnd,SAT@,Team Gravity,0
+Aleksandar,Patrashkov,10,Scrum,AKP@,C.R.U.D,1
+Martin,Bakalov,10,QA,MB@,Dream Crushers,2
+Kaloyan,Dinev,10,BackEnd,kdd@,Dream Crushers,3
+Stanislav1,Todorov,10,FrontEnd,SAT@,C.R.U.D,4
+Aleksandar1,Patrashkov,10,Scrum,AKP@,Team Gravity,5
+Martin1,Bakalov,10,QA,MB@,C.R.U.D,6
+Kaloyana1,Dinev,10,BackEnd,kdd@,Team Gravity,7
+Stanisla23,Todorov23,10,FrontEnd,SAT@,Dream Crushers,8
+Aleksandar123,Patrashkov23,10,Scrum,AKP@,Dream Crushers,9
+Martin123,Bakalov23,10,QA,MB@,Team Gravity,10
+Kaloyana123,Dinev23,10,BackEnd,kdd@,C.R.U.D,11
