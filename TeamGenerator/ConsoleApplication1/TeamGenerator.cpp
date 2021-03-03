@@ -100,18 +100,33 @@ struct SCHOOL
     vector<string> teachersName;
 };
 
+int inputValidation()
+{
+    int number;
+    cin >> number;
+    // input validation
+    while (cin.fail())
+    {
+        cin.clear(); // clear input buffer to restore cin to a usable state
+        cin.ignore(INT_MAX, '\n'); // ignore last input
+        cout << "You can only enter numbers: ";
+        cin >> number;
+    }
+    return number;
+}
+
 void addStudent(vector<STUDENT>& students)
 {
     cout << "How many students do you want to enter: ";
     size_t quantity;
-    cin >> quantity;
+    quantity = inputValidation();
     quantity += students.size();
     for (size_t i = students.size(); i < quantity; i++)
     {
         students.push_back(STUDENT());
         cin >> students[i].firstName;
         cin >> students[i].lastName;
-        cin >> students[i].grade;
+        students[i].grade = inputValidation();
         cin >> students[i].role;
         cin >> students[i].email;
         students[i].id = i;
@@ -123,7 +138,7 @@ void addTeachers(vector<TEACHER>& teachers)
 {
     cout << "How many teachers do you want to enter: ";
     size_t quantity;
-    cin >> quantity;
+    quantity = inputValidation();
     quantity += teachers.size();
     for (size_t i = teachers.size(); i < quantity; i++)
     {
@@ -338,9 +353,7 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
     cout << "2. Print teams" << endl;
     cout << "3. Print teachers" << endl;
     cout << "4. Print school" << endl;
-    int option;
-    cin >> option;
-    switch (option)
+    switch (inputValidation())
     {
         case 1:
             for (int i = 0; i < students.size(); i++)
@@ -377,9 +390,7 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
     cout << "2. Create teachers report" << endl;
     cout << "3. Create teams report" << endl;
     cout << "4. Create school report" << endl;
-    int option;
-    cin >> option;
-    switch (option)
+    switch (inputValidation())
     {
     case 1:
         reports.open("Reports\\studentsReport.txt", ios::in | ios::trunc);
@@ -625,7 +636,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
     }
     cout << "Choose index: ";
     int index;
-    cin >> index;
+    index = inputValidation();
     if (!checkId(teams, index))
     {
         cerr << "Error";
@@ -673,10 +684,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     cout << "9. Archive team" << endl;
     cout << "0. Exit" << endl;
 
-    int option;
-    cin >> option;
-
-    switch (option)
+    switch (inputValidation())
     {
         case 1:
             addStudent(students);
