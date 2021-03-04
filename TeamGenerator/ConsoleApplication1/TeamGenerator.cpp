@@ -6,6 +6,7 @@
 #include <sstream>
 #include <chrono> 
 #include <ctime> 
+#include <conio.h>
 
 using namespace std;
 
@@ -117,36 +118,52 @@ int inputValidation()
 
 void addStudent(vector<STUDENT>& students)
 {
+    system("cls");
     cout << "How many students do you want to enter: ";
     size_t quantity;
     quantity = inputValidation();
     quantity += students.size();
     for (size_t i = students.size(); i < quantity; i++)
     {
+        system("cls");
         students.push_back(STUDENT());
+        cout << "Student " << i <<" data."<<endl;
+        cout << "Enter first Name: ";
         cin >> students[i].firstName;
+        cout << "Enter last Name: ";
         cin >> students[i].lastName;
+        cout << "Enter grade: ";
         students[i].grade = inputValidation();
+        cout << "Enter role: ";
         cin >> students[i].role;
+        cout <<"Your email must have @ symbol!"<< endl;
+        cout << "Enter email: ";
         cin >> students[i].email;
         students[i].id = i;
         students[i].teamStatus = "Not occupied";
     }
+    system("cls");
 }
 
 void addTeachers(vector<TEACHER>& teachers)
 {
+    system("cls");
     cout << "How many teachers do you want to enter: ";
     size_t quantity;
     quantity = inputValidation();
     quantity += teachers.size();
     for (size_t i = teachers.size(); i < quantity; i++)
     {
+        system("cls");
         teachers.push_back(TEACHER());
+        cout << "Teacher " << i << " data." << endl;
+        cout << "Enter first name: ";
         cin >> teachers[i].firstName;
+        cout << "Enter last name: ";
         cin >> teachers[i].lastName;
         teachers[i].id = i;
     }
+    system("cls");
 }
 
 int findRole(vector<STUDENT>& students, const string wantedRole, const string teamName)
@@ -161,7 +178,7 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     }
     if (roleId.size() == 0)
     {
-        cerr << "Error" << endl;
+        cerr << " Error! All students are occupied! " << endl;
     }
     else
     {
@@ -245,7 +262,7 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open teamNames or teamTasks text files! ";
     }
 
 }
@@ -352,6 +369,7 @@ string makeSchoolReport(const SCHOOL& school)
 
 void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams, const SCHOOL& school)
 {
+    system("cls");
     cout << "1. Print students" << endl;
     cout << "2. Print teams" << endl;
     cout << "3. Print teachers" << endl;
@@ -382,12 +400,14 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
         default:
             break;
     }
+    system("cls");
 }
 
 
 
 void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams, const SCHOOL& school)
 {
+    system("cls");
     ofstream reports;
     cout << "1. Create students reports" << endl;
     cout << "2. Create teachers report" << endl;
@@ -405,9 +425,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
             }
             
             reports.close();
+            cout << " Congratulations! Your students report has been saved! ";
         }
         else {
-            cerr << "Error";
+            cerr << " Error! Can't open studentsReport text file! ";
         }
         break;
     case 2:
@@ -419,9 +440,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
                 reports << makeTeachersReport(teachers, i);
             }  
             reports.close();
+            cout << " Congratulations! Your teachers report has been saved! ";
         }
         else {
-            cerr << "Error";
+            cerr << " Error! Can't open teachersReport text file! ";
         }
         break;
     case 3:
@@ -433,9 +455,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
                 reports << makeTeamsReport(teams,i);
             }
             reports.close();
+            cout << " Congratulations! Your teams report has been saved! ";
         }
         else {
-            cerr << "Error";
+            cerr << " Error! Can't open teamsReport text file! ";
         }
         break;
     case 4:
@@ -444,14 +467,16 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         {
             reports << makeSchoolReport(school);
             reports.close();
+            cout << " Congratulations! Your school report has been saved! ";
         }
         else {
-            cerr << "Error";
+            cerr << " Error! Can't open schoolReport text file! ";
         }
         break;
     default:
         break;
     }
+    system("cls");
 }
 
 void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
@@ -471,7 +496,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open studentsSaveFile text file! ";
     }
 
     teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::in | ios::trunc);
@@ -485,7 +510,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open teachersSaveFile text file! ";
     }
 
     teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::in | ios::trunc);
@@ -499,8 +524,9 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << "Error";
+        cerr << "Error! Can't open teamsSaveFile text file! ";
     }
+    cout << " Congratulations! Your data has been saved! ";
 }
 
 int stringConvertor(string& text)
@@ -547,7 +573,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open studentsSaveFile text file! ";
     }
 
     teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::out);
@@ -575,7 +601,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open teachersSaveFile text file! ";
     }
 
     teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::out);
@@ -603,8 +629,9 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << "Error";
+        cerr << " Error! Can't open teamsSaveFile text file! ";
     }
+    cout << " Congratulations! Your data has been opened! ";
 }
 
 bool checkId(const vector<TEAM>& teams, const int wantedId)
@@ -657,6 +684,7 @@ int findTeacherId(const vector<TEACHER>& teachers, const int wantedId)
 
 void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPerson = false, int indexOfremovedPerson = 0)
 {
+    system("cls");
     int index;
     if (removedPerson)
     {
@@ -673,7 +701,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
     }
     if (!checkId(teams, index))
     {
-        cerr << "Error";
+        cerr << " Error! Please enter valid id! ";
     }
     else {
         ofstream archaivedTeams;
@@ -703,10 +731,12 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         teams.erase(teams.begin() + findTeamId(teams, index));
     }
+    system("cls");
 }
 
 void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    system("cls");
     for (int i = 0; i < students.size(); i++)
     {
         cout << makeStudentsReport(students, i);
@@ -723,10 +753,12 @@ void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
         }
     }
     students.erase(students.begin() + deleteIndex); 
+    system("cls");
 }
 
 void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    system("cls");
     for (int i = 0; i < teachers.size(); i++)
     {
         cout << makeTeachersReport(teachers, i);
@@ -756,6 +788,7 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
         }
         teachers.erase(teachers.begin() + deleteIndex);
     }
+    system("cls");
 }
 
 bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
