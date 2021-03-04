@@ -196,3 +196,12 @@ Martin1 Bakalov
 Aleksandar Patrashkov
 Teacher: 1 1
 Id: 2
+First name: C.R.U.D
+Description: Write a program in C# Sharp to implement a method that returns a structure including calling the method and using its value.
+Students: 
+Kaloyana123 Dinev23
+Stanislav1 Todorov
+Martin1 Bakalov
+Aleksandar Patrashkov
+Teacher: 1 1
+Id: 2
