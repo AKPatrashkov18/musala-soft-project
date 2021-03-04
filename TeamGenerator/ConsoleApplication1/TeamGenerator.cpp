@@ -178,7 +178,7 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     }
     if (roleId.size() == 0)
     {
-        cerr << " Error! All students are occupied! " << endl;
+        cerr << "Error! All students are occupied! " << endl;
     }
     else
     {
@@ -208,6 +208,7 @@ int findNotOccupiedStudents(vector<STUDENT>& students)
 
 void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    system("cls");
     ifstream teamName;
     ifstream teamTask;
     int studentIndex;
@@ -262,9 +263,9 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
     }
     else
     {
-        cerr << " Error! Can't open teamNames or teamTasks text files! ";
+        cerr << "Error! Can't open teamNames or teamTasks text files! "<<endl;
     }
-
+    system("cls");
 }
 
 string makeStudentsReport(const vector<STUDENT>& students, int wantedIndex)
@@ -370,10 +371,13 @@ string makeSchoolReport(const SCHOOL& school)
 void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers, const vector<TEAM>& teams, const SCHOOL& school)
 {
     system("cls");
-    cout << "1. Print students" << endl;
-    cout << "2. Print teams" << endl;
-    cout << "3. Print teachers" << endl;
-    cout << "4. Print school" << endl;
+    cout << "|-----------------------------------------------------------|" << endl;
+    cout << "|                    1. Print students                      |" << endl;
+    cout << "|                    2. Print teachers                      |" << endl;
+    cout << "|                    3. Print teams                         |" << endl;
+    cout << "|                    4. Print school                        |" << endl;
+    cout << "|-----------------------------------------------------------|" << endl;
+    cout << "Enter your option: ";
     switch (inputValidation())
     {
         case 1:
@@ -409,10 +413,13 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
 {
     system("cls");
     ofstream reports;
-    cout << "1. Create students reports" << endl;
-    cout << "2. Create teachers report" << endl;
-    cout << "3. Create teams report" << endl;
-    cout << "4. Create school report" << endl;
+    cout << "|-----------------------------------------------------|"<<endl;
+    cout << "|              1. Create students reports             |" << endl;
+    cout << "|              2. Create teachers report              |" << endl;
+    cout << "|              3. Create teams report                 |" << endl;
+    cout << "|              4. Create school report                |" << endl;
+    cout << "|-----------------------------------------------------|"<<endl;
+    cout << "Enter your option: ";
     switch (inputValidation())
     {
     case 1:
@@ -425,10 +432,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
             }
             
             reports.close();
-            cout << " Congratulations! Your students report has been saved! ";
+            cout << "Congratulations! Your students report has been saved! "<<endl;
         }
         else {
-            cerr << " Error! Can't open studentsReport text file! ";
+            cerr << "Error! Can't open studentsReport text file! "<<endl;
         }
         break;
     case 2:
@@ -440,10 +447,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
                 reports << makeTeachersReport(teachers, i);
             }  
             reports.close();
-            cout << " Congratulations! Your teachers report has been saved! ";
+            cout << "Congratulations! Your teachers report has been saved! "<<endl;
         }
         else {
-            cerr << " Error! Can't open teachersReport text file! ";
+            cerr << "Error! Can't open teachersReport text file! "<<endl;
         }
         break;
     case 3:
@@ -455,10 +462,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
                 reports << makeTeamsReport(teams,i);
             }
             reports.close();
-            cout << " Congratulations! Your teams report has been saved! ";
+            cout << "Congratulations! Your teams report has been saved! "<<endl;
         }
         else {
-            cerr << " Error! Can't open teamsReport text file! ";
+            cerr << "Error! Can't open teamsReport text file! "<<endl;
         }
         break;
     case 4:
@@ -467,10 +474,10 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
         {
             reports << makeSchoolReport(school);
             reports.close();
-            cout << " Congratulations! Your school report has been saved! ";
+            cout << "Congratulations! Your school report has been saved! " << endl;
         }
         else {
-            cerr << " Error! Can't open schoolReport text file! ";
+            cerr << "Error! Can't open schoolReport text file! "<<endl;
         }
         break;
     default:
@@ -496,7 +503,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << " Error! Can't open studentsSaveFile text file! ";
+        cerr << "Error! Can't open studentsSaveFile text file! "<<endl;
     }
 
     teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::in | ios::trunc);
@@ -510,7 +517,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << " Error! Can't open teachersSaveFile text file! ";
+        cerr << " Error! Can't open teachersSaveFile text file! "<<endl;
     }
 
     teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::in | ios::trunc);
@@ -524,9 +531,9 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     }
     else
     {
-        cerr << "Error! Can't open teamsSaveFile text file! ";
+        cerr << "Error! Can't open teamsSaveFile text file! "<<endl;
     }
-    cout << " Congratulations! Your data has been saved! ";
+    cout << "Congratulations! Your data has been saved! "<<endl;
 }
 
 int stringConvertor(string& text)
@@ -573,7 +580,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << " Error! Can't open studentsSaveFile text file! ";
+        cerr << "Error! Can't open studentsSaveFile text file! "<<endl;
     }
 
     teachersSaveFile.open("Save files\\teachersSaveFile.txt", ios::out);
@@ -601,7 +608,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << " Error! Can't open teachersSaveFile text file! ";
+        cerr << "Error! Can't open teachersSaveFile text file! "<<endl;
     }
 
     teamsSaveFile.open("Save files\\teamsSaveFile.txt", ios::out);
@@ -629,9 +636,9 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
     else
     {
-        cerr << " Error! Can't open teamsSaveFile text file! ";
+        cerr << "Error! Can't open teamsSaveFile text file! "<<endl;
     }
-    cout << " Congratulations! Your data has been opened! ";
+    cout << "Congratulations! Your data has been opened! "<<endl;
 }
 
 bool checkId(const vector<TEAM>& teams, const int wantedId)
@@ -684,7 +691,6 @@ int findTeacherId(const vector<TEACHER>& teachers, const int wantedId)
 
 void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPerson = false, int indexOfremovedPerson = 0)
 {
-    system("cls");
     int index;
     if (removedPerson)
     {
@@ -701,7 +707,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
     }
     if (!checkId(teams, index))
     {
-        cerr << " Error! Please enter valid id! ";
+        cerr << "Error! Please enter valid id! "<<endl;
     }
     else {
         ofstream archaivedTeams;
@@ -731,7 +737,6 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         teams.erase(teams.begin() + findTeamId(teams, index));
     }
-    system("cls");
 }
 
 void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
@@ -758,7 +763,6 @@ void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
-    system("cls");
     for (int i = 0; i < teachers.size(); i++)
     {
         cout << makeTeachersReport(teachers, i);
@@ -788,23 +792,30 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
         }
         teachers.erase(teachers.begin() + deleteIndex);
     }
-    system("cls");
+
 }
 
 bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
 {
-    cout << "1. Add students" << endl;
-    cout << "2. Add teacher" << endl;
-    cout << "3. Generate teams" << endl;
-    cout << "4. Print menu" << endl;
-    cout << "5. Create reposrt menu" << endl;
-    cout << "6. Edit menu" << endl;
-    cout << "7. Save" << endl;
-    cout << "8. Open last save" << endl;
-    cout << "9. Archive team" << endl;
-    cout << "10. Delete student" << endl;
-    cout << "11. Delete teacher" << endl;
-    cout << "0. Exit" << endl;
+    
+    cout << "|------------------------------------------------------------------|"<<endl;
+    cout << "|       .: WELCOME TO OUR PROGRAM! CHOOSE YOUR OPTION: :.          |" << endl;
+    cout << "|                                                                  |"<<endl;
+    cout << "|                   1. Add students                                |" << endl;
+    cout << "|                   2. Add teacher                                 |" << endl;
+    cout << "|                   3. Generate teams                              |" << endl;
+    cout << "|                   4. Print menu                                  |" << endl;
+    cout << "|                   5. Create reports menu                         |" << endl;
+    cout << "|                   6. Edit menu                                   |" << endl;
+    cout << "|                   7. Save                                        |" << endl;
+    cout << "|                   8. Open last save                              |" << endl;
+    cout << "|                   9. Archive team                                |" << endl;
+    cout << "|                   10. Delete student                             |" << endl;
+    cout << "|                   11. Delete teacher                             |" << endl;
+    cout << "|                   0. Exit                                        |" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|------------------------------------------------------------------|"<<endl;
+    cout << "Enter your option: ";
 
     switch (inputValidation())
     {

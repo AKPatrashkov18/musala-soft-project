@@ -1,3 +1,0 @@
-Dream Crushers,Write a JavaScript function to compute the value of bn where n is the exponent and b is the bases. Accept b and n from the user and display the result.,Kaloyan Dinev,Stanisla23 Todorov23,Martin Bakalov,Aleksandar123 Patrashkov23,1 1,0
-Team Gravity,Write a program in C to copy a file in another name.,Kaloyana1 Dinev,Stanislav Todorov,Martin123 Bakalov23,Aleksandar1 Patrashkov,2 2,1
-C.R.U.D,Write a program in C# Sharp to implement a method that returns a structure including calling the method and using its value.,Kaloyana123 Dinev23,Stanislav1 Todorov,Martin1 Bakalov,Aleksandar Patrashkov,1 1,2
