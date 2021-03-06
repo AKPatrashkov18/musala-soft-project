@@ -1,12 +1,12 @@
-Stanislav,Todorov,10,FrontEnd,SAT@,The Elite,0
-Aleksandar,Patrashkov,10,Scrum,AKP@,KingPins,1
-Martin,Bakalov,10,QA,MB@,The Elite,2
-Kaloyan,Dinev,10,BackEnd,kdd@,The Elite,3
+Stanislav,Todorov,10,FrontEnd,SAT@,RebelSS,0
+Aleksandar,Patrashkov,10,Scrum,AKP@,RebelSS,1
+Martin,Bakalov,10,QA,MB@,RebelSS,2
+Kaloyan,Dinev,10,BackEnd,kdd@,The Shield UK,3
 Stanislav1,Todorov,10,FrontEnd,SAT@,The Elite,4
 Aleksandar1,Patrashkov,10,Scrum,AKP@,The Elite,5
-Martin1,Bakalov,10,QA,MB@,KingPins,6
+Martin1,Bakalov,10,QA,MB@,The Elite,6
 Kaloyana1,Dinev,10,BackEnd,kdd@,The Elite,7
-Stanisla23,Todorov23,10,FrontEnd,SAT@,KingPins,8
-Aleksandar123,Patrashkov23,10,Scrum,AKP@,The Elite,9
-Martin123,Bakalov23,10,QA,MB@,The Elite,10
-Kaloyana123,Dinev23,10,BackEnd,kdd@,KingPins,11
+Stanisla23,Todorov23,10,FrontEnd,SAT@,The Shield UK,8
+Aleksandar123,Patrashkov23,10,Scrum,AKP@,The Shield UK,9
+Martin123,Bakalov23,10,QA,MB@,The Shield UK,10
+Kaloyana123,Dinev23,10,BackEnd,kdd@,RebelSS,11

@@ -140,7 +140,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DataLayer.cpp" />
+    <ClCompile Include="PresentationLayer.cpp" />
+    <ClCompile Include="Structures.cpp" />
     <ClCompile Include="TeamGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataLayer.h" />
+    <ClInclude Include="PresentationLayer.h" />
+    <ClInclude Include="Structures.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
