@@ -144,7 +144,7 @@ int inputValidation()
     return number;
 }
 
-void addStudent(vector<STUDENT>& students)
+void addStudent(vector<STUDENT>& students, SCHOOL& school)
 {
     system("cls");
     cout << "How many students do you want to enter: ";
@@ -169,11 +169,12 @@ void addStudent(vector<STUDENT>& students)
         students[i].email = checkEmail();
         students[i].id = i;
         students[i].teamStatus = "Not occupied";
+        school.studentsName.push_back(students[i].firstName + " " + students[i].lastName);
     }
     system("cls");
 }
 
-void addTeachers(vector<TEACHER>& teachers)
+void addTeachers(vector<TEACHER>& teachers, SCHOOL& school)
 {
     system("cls");
     cout << "How many teachers do you want to enter: ";
@@ -190,6 +191,7 @@ void addTeachers(vector<TEACHER>& teachers)
         cout << "Enter last name: ";
         cin >> teachers[i].lastName;
         teachers[i].id = i;
+        school.teachersName.push_back(teachers[i].firstName + " " + teachers[i].lastName);
     }
     system("cls");
 }
@@ -610,7 +612,7 @@ int stringConvertor(string& text)
     return number;
 }
 
-void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, SCHOOL& school)
 {
     ifstream studentsSaveFile;
     ifstream teachersSaveFile;
@@ -619,6 +621,8 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     students.clear();
     teachers.clear();
     teams.clear();
+    school.studentsName.clear();
+    school.teachersName.clear();
 
     studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::out);
     if (studentsSaveFile.is_open())
@@ -640,6 +644,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             students[students.size() - 1].teamStatus = container;
             getline(studentsSaveFile, container, '\n');
             students[students.size() - 1].id = stringConvertor(container);
+            school.studentsName.push_back(students[students.size() - 1].firstName + " " + students[students.size() - 1].lastName);
         }
         students.erase(students.end() - 1);
         studentsSaveFile.close();
@@ -668,6 +673,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             }
             getline(teachersSaveFile, container, '\n');
             teachers[teachers.size() - 1].id = stringConvertor(container);
+            school.teachersName.push_back(teachers[teachers.size() - 1].firstName + " " + teachers[teachers.size() - 1].lastName);
         }
         teachers.erase(teachers.end() - 1);
         teachersSaveFile.close();
@@ -1043,7 +1049,7 @@ void editMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     }
 }
 
-bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
+bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, SCHOOL& school)
 {
     cout << "|------------------------------------------------------------------|"<<endl;
     cout << "|       .: WELCOME TO OUR PROGRAM! CHOOSE YOUR OPTION: :.          |" << endl;
@@ -1068,11 +1074,11 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     switch (inputValidation())
     {
         case 1:
-            addStudent(students);
+            addStudent(students, school);
             return true;
             break;
         case 2:
-            addTeachers(teachers);
+            addTeachers(teachers, school);
             return true;
             break;
         case 3:
@@ -1106,7 +1112,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             saveFiles(students, teachers, teams);
             return true;
         case 11:
-            openSave(students, teachers, teams);
+            openSave(students, teachers, teams, school);
             return true;
         case 12:
             tutorial();
@@ -1128,6 +1134,8 @@ int main()
     vector<TEACHER> teachers;
     vector<TEAM> teams;
     SCHOOL school;
+    cout << "Please enter the name of your organisation: ";
+    cin >> school.name;
     bool exit=false;
     do {
         exit = mainMenu(students, teachers, teams, school);
