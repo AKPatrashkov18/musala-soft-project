@@ -101,6 +101,34 @@ struct SCHOOL
     vector<string> teachersName;
 };
 
+string checkRole()
+{
+    string role;
+    cin >> role;
+    if (role != "BackEnd" and role != "FrontEnd" and role != "QA" and role != "Scrum")
+    {
+        cerr << "Error! Invalid role!" << endl;
+        cout << "Try again: ";
+        return checkRole();
+    }
+    return role;
+}
+
+string checkEmail()
+{
+    string email;
+    cin >> email;
+    for (int i = 0; i < email.size(); i++)
+    {
+        if (email[i] == '@')
+        {
+            return email;
+        }
+    }
+    cerr << "Error there isn't @ symbol" << endl;
+    return checkEmail();
+}
+
 int inputValidation()
 {
     int number;
@@ -135,10 +163,10 @@ void addStudent(vector<STUDENT>& students)
         cout << "Enter grade: ";
         students[i].grade = inputValidation();
         cout << "Enter role: ";
-        cin >> students[i].role;
+        students[i].role = checkRole();
         cout <<"Your email must have @ symbol!"<< endl;
         cout << "Enter email: ";
-        cin >> students[i].email;
+        students[i].email = checkEmail();
         students[i].id = i;
         students[i].teamStatus = "Not occupied";
     }
@@ -178,19 +206,16 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     }
     if (roleId.size() == 0)
     {
-        cerr << "Error! All students are occupied! " << endl;
+        return -1;
     }
-    else
+    int shuffle;
+    for (int i = 0; i < roleId.size(); i++)
     {
-        int shuffle;
-        for (int i = 0; i < roleId.size(); i++)
-        {
-            shuffle = rand() % roleId.size();
-            swap(roleId[0], roleId[shuffle]);
-        }
-        students[roleId[0]].teamStatus = teamName;
-        return roleId[0];
+        shuffle = rand() % roleId.size();
+        swap(roleId[0], roleId[shuffle]);
     }
+    students[roleId[0]].teamStatus = teamName;
+    return roleId[0];
 }
 
 int findNotOccupiedStudents(vector<STUDENT>& students)
@@ -208,7 +233,7 @@ int findNotOccupiedStudents(vector<STUDENT>& students)
 
 void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
-    system("cls");
+    bool checkIfTeamsIsCreated = false;
     ifstream teamName;
     ifstream teamTask;
     int studentIndex;
@@ -241,13 +266,43 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
             teams[teams.size() - 1].date = container;
 
             studentIndex = findRole(students, "BackEnd", teams[teams.size() - 1].name);
+            if (studentIndex == -1)
+            {
+                teams.erase(teams.end() - 1);
+                cerr << "Error! Not enough students or too many students have the same role! There are " << teams.size() << "created teams. Wherethere could be " << notOccupiedCount / 4 << endl;
+                return;
+            }
             teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
             studentIndex = findRole(students, "FrontEnd", teams[teams.size() - 1].name);
+            if (studentIndex == -1)
+            {
+                teams.erase(teams.end() - 1);
+                cerr << "Error! Not enough students or too many students have the same role! There are " << teams.size() << " created teams. Where there could be " << notOccupiedCount / 4 << endl;
+                return;
+            }
             teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
             studentIndex = findRole(students, "QA", teams[teams.size() - 1].name);
+            if (studentIndex == -1)
+            {
+                teams.erase(teams.end() - 1);
+                cerr << "Error! Not enough students or too many students have the same role! There are " << teams.size() << " created teams. Where there could be " << notOccupiedCount / 4 << endl;
+                return;
+            }
             teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
             studentIndex = findRole(students, "Scrum", teams[teams.size() - 1].name);
+            if (studentIndex == -1)
+            {
+                teams.erase(teams.end() - 1);
+                cerr << "Error! Not enough students or too many students have the same role! There are " << teams.size() << " created teams. Where there could be " << notOccupiedCount / 4 << endl;
+                return;
+            }
             teams[teams.size() - 1].students.push_back(students[studentIndex].firstName + " " + students[studentIndex].lastName);
+
+            if (teachers.size() == 0)
+            {
+                cerr << "Error! Not enought teachers" << endl;
+                return;
+            }
 
             int randomIndex = rand() % teachers.size();
             teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName;
@@ -259,13 +314,17 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
 
             teamTask.clear();
             teamTask.seekg(0, ios::beg);
+            checkIfTeamsIsCreated = true;
+        }
+        if (!checkIfTeamsIsCreated)
+        {
+            cerr << "Error! Not enought students" << endl;
         }
     }
     else
     {
         cerr << "Error! Can't open teamNames or teamTasks text files! "<<endl;
     }
-    system("cls");
 }
 
 string makeStudentsReport(const vector<STUDENT>& students, int wantedIndex)
@@ -376,10 +435,12 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
     cout << "|                    2. Print teachers                      |" << endl;
     cout << "|                    3. Print teams                         |" << endl;
     cout << "|                    4. Print school                        |" << endl;
+    cout << "|                    0. Exit                                |" << endl;
     cout << "|-----------------------------------------------------------|" << endl;
     cout << "Enter your option: ";
     switch (inputValidation())
     {
+        system("cls");
         case 1:
             for (int i = 0; i < students.size(); i++)
             {
@@ -387,24 +448,26 @@ void printMenu(const vector<STUDENT>& students, const vector<TEACHER>& teachers,
             }
             break;
         case 2:
-            for (int i = 0; i < teams.size(); i++)
-            {
-                cout << makeTeamsReport(teams, i);
-            }
-            break;
-        case 3:
             for (int i = 0; i < teachers.size(); i++)
             {
                 cout << makeTeachersReport(teachers, i);
             }
             break;
+        case 3:
+            for (int i = 0; i < teams.size(); i++)
+            {
+                cout << makeTeamsReport(teams, i);
+            }
+            break;
         case 4:
             cout << makeSchoolReport(school);
+            break;
+        case 0:
+            return;
             break;
         default:
             break;
     }
-    system("cls");
 }
 
 
@@ -418,6 +481,7 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
     cout << "|              2. Create teachers report              |" << endl;
     cout << "|              3. Create teams report                 |" << endl;
     cout << "|              4. Create school report                |" << endl;
+    cout << "|              0. Exit                                |" << endl;
     cout << "|-----------------------------------------------------|"<<endl;
     cout << "Enter your option: ";
     switch (inputValidation())
@@ -480,10 +544,12 @@ void reportsMenu(const vector<STUDENT>& students, const vector<TEACHER>& teacher
             cerr << "Error! Can't open schoolReport text file! "<<endl;
         }
         break;
+    case 0:
+        return;
+        break;
     default:
         break;
     }
-    system("cls");
 }
 
 void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
@@ -689,12 +755,12 @@ int findTeacherId(const vector<TEACHER>& teachers, const int wantedId)
     return 0;
 }
 
-void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPerson = false, int indexOfremovedPerson = 0)
+void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPersonOrEditedPerson = false, int indexOfremovedPersonOrEditedPerson = 0)
 {
     int index;
-    if (removedPerson)
+    if (removedPersonOrEditedPerson)
     {
-        index = indexOfremovedPerson;
+        index = indexOfremovedPersonOrEditedPerson;
     }
     else
     {
@@ -795,26 +861,208 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 }
 
+void tutorial()
+{
+    system("cls");
+    string container;
+    ifstream tutorial;
+    tutorial.open("Data files\\tutorial.txt", ios::out);
+    if (tutorial.is_open())
+    {
+        while (!tutorial.eof())
+        {
+            getline(tutorial, container);
+            cout << container << endl;
+        }
+    }
+    else
+    {
+        cerr << "Error! Can't open tutorial text file!" << endl;
+    }
+}
+
+void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    system("cls");
+    for (int i = 0; i < students.size(); i++)
+    {
+        cout << makeStudentsReport(students, i);
+    }
+    cout << "Choose index: ";
+    string container;
+    int editIndex;
+    cin >> editIndex;
+    system("cls");
+
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|                         1. First name                            |" << endl;
+    cout << "|                         2. Last name                             |" << endl;
+    cout << "|                         3. Grade                                 |" << endl;
+    cout << "|                         4. Role                                  |" << endl;
+    cout << "|                         5. Email                                 |" << endl;
+    cout << "|                         0. Exit                                  |" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "Enter your option: ";
+
+    switch (inputValidation())
+    {
+    case 1:
+        cin >> container;
+        for (int i = 0; i < teams.size(); i++)
+        {
+            for (int j = 0; j < teams[i].students.size(); j++)
+            {
+                if (students[findStudentId(students, editIndex)].firstName + " " + students[findStudentId(students, editIndex)].lastName == teams[i].students[j])
+                {
+                    teams[i].students[j] = container + " " + students[findStudentId(students, editIndex)].lastName;
+                    students[findStudentId(students, editIndex)].firstName = container;
+                    break;
+                }
+            }
+
+        }
+        break;
+    case 2:
+        cin >> container;
+        for (int i = 0; i < teams.size(); i++)
+        {
+            for (int j = 0; j < teams[i].students.size(); j++)
+            {
+                if (students[findStudentId(students, editIndex)].firstName + " " + students[findStudentId(students, editIndex)].lastName == teams[i].students[j])
+                {
+                    teams[i].students[j] = students[findStudentId(students, editIndex)].firstName + " " + container;
+                    students[findStudentId(students, editIndex)].lastName = container;
+                    break;
+                }
+            }
+
+        }
+        break;
+    case 3:
+        students[findStudentId(students, editIndex)].grade = inputValidation();
+        break;
+    case 4:
+        students[findStudentId(students, editIndex)].role = checkRole();
+        break;
+    case 5:
+        students[findStudentId(students, editIndex)].email = checkEmail();
+        break;
+    case 0:
+        return;
+        break;
+    default:
+        cerr << "Error! Invalid option! Try again." << endl;
+        editStudent(students, teachers, teams);
+        break;
+    }
+
+}
+
+void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    system("cls");
+    for (int i = 0; i < teachers.size(); i++)
+    {
+        cout << makeTeachersReport(teachers, i);
+    }
+    cout << "Choose index: ";
+    string container;
+    int editIndex;
+    cin >> editIndex;
+    system("cls");
+
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|                         1. First name                            |" << endl;
+    cout << "|                         2. Last name                             |" << endl;
+    cout << "|                         0. Exit                                  |" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "Enter your option: ";
+
+    switch (inputValidation())
+    {
+    case 1:
+        cin >> container;
+        for (int i = 0; i < teams.size(); i++)
+        {
+            if (teams[i].teacher == teachers[findTeacherId(teachers, editIndex)].firstName + " " + teachers[findTeacherId(teachers, editIndex)].lastName)
+            {
+                teams[i].teacher = container + " " + teachers[findTeacherId(teachers, editIndex)].lastName;
+            }
+        }
+        teachers[findTeacherId(teachers, editIndex)].firstName = container;
+        break;
+    case 2:
+        cin >> container;
+        for (int i = 0; i < teams.size(); i++)
+        {
+            if (teams[i].teacher == teachers[findTeacherId(teachers, editIndex)].firstName + " " + teachers[findTeacherId(teachers, editIndex)].lastName)
+            {
+                teams[i].teacher = teachers[findTeacherId(teachers, editIndex)].firstName + " " + container;
+            }
+        }
+        teachers[findTeacherId(teachers, editIndex)].lastName = container;
+        break;
+    case 0:
+        return;
+        break;
+    default:
+        editTeacher(students, teachers, teams);
+        break;
+    }
+}
+
+void editMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+    system("cls");
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|                         1. Edit student                          |" << endl;
+    cout << "|                         2. Edit teacher                          |" << endl;
+    cout << "|                         0. Exit                                  |" << endl;
+    cout << "|                                                                  |" << endl;
+    cout << "|------------------------------------------------------------------|" << endl;
+    cout << "Enter your option: ";
+    switch (inputValidation())
+    {
+    case 1:
+        editStudent(students, teachers, teams);
+        break;
+    case 2:
+        editTeacher(students, teachers, teams);
+        break;
+    case 0:
+        return;
+        break;
+    default:
+        editMenu(students, teachers, teams);
+        break;
+    }
+}
+
 bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, const SCHOOL& school)
 {
-    
     cout << "|------------------------------------------------------------------|"<<endl;
     cout << "|       .: WELCOME TO OUR PROGRAM! CHOOSE YOUR OPTION: :.          |" << endl;
-    cout << "|                                                                  |"<<endl;
+    cout << "|                                                                  |" << endl;
     cout << "|                   1. Add students                                |" << endl;
     cout << "|                   2. Add teacher                                 |" << endl;
     cout << "|                   3. Generate teams                              |" << endl;
     cout << "|                   4. Print menu                                  |" << endl;
     cout << "|                   5. Create reports menu                         |" << endl;
     cout << "|                   6. Edit menu                                   |" << endl;
-    cout << "|                   7. Save                                        |" << endl;
-    cout << "|                   8. Open last save                              |" << endl;
+    cout << "|                   7. Delete student                              |" << endl;
+    cout << "|                   8. Delete teacher                              |" << endl;
     cout << "|                   9. Archive team                                |" << endl;
-    cout << "|                   10. Delete student                             |" << endl;
-    cout << "|                   11. Delete teacher                             |" << endl;
+    cout << "|                   10. Save                                       |" << endl;
+    cout << "|                   11. Open last save                             |" << endl;
+    cout << "|                   12. Tutorial                                   |" << endl;
     cout << "|                   0. Exit                                        |" << endl;
     cout << "|                                                                  |" << endl;
-    cout << "|------------------------------------------------------------------|"<<endl;
+    cout << "|------------------------------------------------------------------|" << endl;
     cout << "Enter your option: ";
 
     switch (inputValidation())
@@ -840,29 +1088,34 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             return true;
             break;
         case 6:
+            editMenu(students, teachers, teams);
             return true;
             break;
         case 7:
-            saveFiles(students, teachers, teams);
+            deleteStudent(students, teachers, teams);
             return true;
             break;
         case 8:
-            openSave(students, teachers, teams);
+            deleteTeacher(students, teachers, teams);
             return true;
             break;
         case 9:
             archiveTeam(students, teachers, teams);
             return true;
         case 10:
-            deleteStudent(students, teachers, teams);
+            saveFiles(students, teachers, teams);
             return true;
         case 11:
-            deleteTeacher(students, teachers, teams);
+            openSave(students, teachers, teams);
+            return true;
+        case 12:
+            tutorial();
             return true;
         case 0:
             return false;
             break;
         default:
+            cerr << "Error! Invalid option!" << endl; 
             return mainMenu(students, teachers, teams, school);
 
     }

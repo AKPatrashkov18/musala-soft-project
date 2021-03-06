@@ -1,0 +1,10 @@
+If you choose the first option from the main menu, "Add students", it will ask you to enter how many students do you want to enter. Then you have to enter personal information like first and last name, grade, etc. for each student. 
+If you choose the second option from the main menu, "Add teachers", it will ask you to enter how many teachers do you want to enter. Then you have to enter personal information like first and last name, for each teacher. 
+If you choose the third option from the main menu, "Generate teams", the program will make teams with one teacher and four students.  The number of teams will be students divided by four.
+If you choose the fourth option from the main menu, "Print menu", the program will show you a menu with four options, each option will print the equal information.
+If you choose the fifth option from the main menu, "Create reports menu", the program will show you a menu with four options, each option will make the report that you want to check or see. The reports will be saved in "musala-soft-project\TeamGenerator\ConsoleApplication1\Reports"
+If you choose the sixth option from the main menu, "Edit menu", the program will let you to edit teachers ot students information.
+With option seven you can delete information about student that you want, and with option eight you can delete information about teacher that you want. 
+If you choose option number ten, "Save", the program will save the information that you already entered, if you delete student or teacher or edit teacher or student or archaive team you MUST save to save your peogress and with option number eleven, you can open the last save, that you did. 
+With option nine, you can archive team, archived teams will be saved in "musala-soft-project\TeamGenerator\ConsoleApplication1\Archived files\archaivedTeams.txt". 
+Last function is "Exit", with this option, you can leave the program, just enter 0.

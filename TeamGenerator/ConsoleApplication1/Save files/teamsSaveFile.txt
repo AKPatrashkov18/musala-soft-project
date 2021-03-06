@@ -1,0 +1,3 @@
+The Elite,Write a program in Python that asks the user how many Fibonnaci numbers to generate and then generates them. Take this opportunity to think about how you can use functions. Make sure to ask the user to enter the number of numbers in the sequence to generate.,Kaloyana1 Dinev,Stanislav Todorov,Martin123 Bakalov23,Aleksandar1 Patrashkov,2 2,0
+KingPins,Create a function in Python that takes a number as an argument and returns negative of that number. Return negative numbers without any change.,Kaloyana123 Dinev23,Stanisla23 Todorov23,Martin1 Bakalov,Aleksandar Patrashkov,1 aa,1
+The Elite,Write a program in C to copy a file in another name.,Kaloyan Dinev,Stanislav1 Todorov,Martin Bakalov,Aleksandar123 Patrashkov23,2 2,2

@@ -205,3 +205,21 @@ Martin1 Bakalov
 Aleksandar Patrashkov
 Teacher: 1 1
 Id: 2
+First name: WarShips
+Description: Write a program in C to delete a specific line from a file.
+Students: 
+Kaloyana1 Dinev
+Stanislav Todorov
+Martin1 Bakalov
+Aleksandar123 Patrashkov23
+Teacher: 1 1
+Id: 0
+First name: WolfGang
+Description: Write a JavaScript program to rotate the string 'w3resource' in right direction by periodically removing one letter from the end of the string and attaching it to the front. 
+Students: 
+Kaloyana123 Dinev23
+Stanisla23 Todorov23
+Martin Bakalov
+Aleksandar Patrashkov
+Teacher: 2 2
+Id: 1
