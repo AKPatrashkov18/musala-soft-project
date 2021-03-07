@@ -223,3 +223,12 @@ Martin Bakalov
 Aleksandar Patrashkov
 Teacher: 2 2
 Id: 1
+First name: ShakeDown
+Description: Write a function in C++ that takes two integers (hours, minutes), converts them to seconds, and adds them.
+Students: 
+Kaloyan Dinev
+Stanislav Todorov
+Martin Bakalov
+Aleksandar Patrashkov
+Teacher: Petar Georgiev
+Id: 0

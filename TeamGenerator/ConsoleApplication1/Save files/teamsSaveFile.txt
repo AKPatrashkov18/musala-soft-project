@@ -1,3 +1,0 @@
-RebelSS,Write a program in C# Sharp to implement a method that returns a structure including calling the method and using its value.,Kaloyana123 Dinev23,Stanislav Todorov,Martin Bakalov,Aleksandar Patrashkov,2 2,0
-The Elite,Write a C program to accept a coordinate point in a XY coordinate system and determine in which quadrant the coordinate point lies.,Kaloyana1 Dinev,Stanislav1 Todorov,Martin1 Bakalov,Aleksandar1 Patrashkov,2 2,1
-The Shield UK,Create a function in C++ that takes a number as its only argument and returns true if it's less than or equal to zero, otherwise return false.,Kaloyan Dinev,Stanisla23 Todorov23,Martin123 Bakalov23,Aleksandar123 Patrashkov23,1 1,2

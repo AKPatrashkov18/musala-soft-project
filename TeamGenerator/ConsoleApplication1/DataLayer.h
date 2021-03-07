@@ -27,11 +27,11 @@ void openSave(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, st
 
 bool checkId(const std::vector<TEAM>& teams, const int wantedId);
 
-int findTeamId(const std::vector<TEAM>& teams, const int wantedId);
+int findTeamIndex(const std::vector<TEAM>& teams, const int wantedId);
 
-int findStudentId(const std::vector<STUDENT>& students, const int wantedId);
+int findStudentIndex(const std::vector<STUDENT>& students, const int wantedId);
 
-int findTeacherId(const std::vector<TEACHER>& teachers, const int wantedId);
+int findTeacherIndex(const std::vector<TEACHER>& teachers, const int wantedId);
 
 void archiveTeam(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams, bool removedPersonOrEditedPerson = false, int indexOfremovedPersonOrEditedPerson = 0);
 

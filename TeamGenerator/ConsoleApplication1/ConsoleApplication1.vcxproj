@@ -144,11 +144,13 @@
     <ClCompile Include="PresentationLayer.cpp" />
     <ClCompile Include="Structures.cpp" />
     <ClCompile Include="TeamGenerator.cpp" />
+    <ClCompile Include="UnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DataLayer.h" />
     <ClInclude Include="PresentationLayer.h" />
     <ClInclude Include="Structures.h" />
+    <ClInclude Include="UnitTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
