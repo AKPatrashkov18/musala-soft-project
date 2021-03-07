@@ -8,10 +8,14 @@ void insertTestData(std::vector<STUDENT>& students, std::vector<TEACHER>& teache
 
 void testFindNotOccupiedStudents(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers);
 
-void testIsDataSavesCorrectly(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);
+void testIsDataSaves(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);
 
-void testIsStringConvertedCorrectly();
+void testIsStringConverted();
 
 void testFindIndex(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers);
 
-void testIfTeamsAreArchivedCorrectly(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);
+void testIfTeamsAreArchived(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);
+
+void testAreStudentsDeleted(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);
+
+void testAreTeachersDeleted(std::vector<STUDENT>& students, std::vector<TEACHER>& teachers, std::vector<TEAM>& teams);

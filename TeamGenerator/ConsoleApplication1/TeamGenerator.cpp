@@ -19,7 +19,7 @@ int main()
     vector<STUDENT> students;
     vector<TEACHER> teachers;
     vector<TEAM> teams;
-    testFindIndex(students,teachers);
+    testAreTeachersDeleted(students,teachers,teams);
     /*SCHOOL school;
     cout << "Please enter the name of your organisation: ";
     cin >> school.name;

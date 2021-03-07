@@ -74,7 +74,7 @@ void testFindNotOccupiedStudents(vector<STUDENT>& students, vector<TEACHER>& tea
 	teachers.clear();
 }
 
-void testIsDataSavesCorrectly(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+void testIsDataSaves(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
 	insertTestData(students, teachers);
 	saveFiles(students, teachers, teams);
@@ -103,7 +103,7 @@ void testIsDataSavesCorrectly(vector<STUDENT>& students, vector<TEACHER>& teache
 	teachers.clear();
 }
 
-void testIsStringConvertedCorrectly()
+void testIsStringConverted()
 {
 	string number = "1083294";
 
@@ -134,7 +134,7 @@ void testFindIndex(vector<STUDENT>& students, vector<TEACHER>& teachers)
 	teachers.clear();
 }
 
-void testIfTeamsAreArchivedCorrectly(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+void testIfTeamsAreArchived(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
 	insertTestData(students, teachers);
 	generateTeam(students, teachers, teams);
@@ -148,4 +148,44 @@ void testIfTeamsAreArchivedCorrectly(vector<STUDENT>& students, vector<TEACHER>&
 	{
 		cout << "Fail!" << endl;
 	}
+
+	students.clear();
+	teachers.clear();
 }
+
+void testAreStudentsDeleted(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+	insertTestData(students, teachers);
+	deleteStudent(students, teachers, teams);
+	
+	if (students.size() == 3)
+	{
+		cout << "Pass!" << endl;
+	}
+	else
+	{
+		cout << "Fail!" << endl;
+	}
+
+	students.clear();
+	teachers.clear();
+}
+
+void testAreTeachersDeleted(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
+{
+	insertTestData(students, teachers);
+	deleteTeacher(students, teachers, teams);
+
+	if (teachers.size() == 1)
+	{
+		cout << "Pass!" << endl;
+	}
+	else
+	{
+		cout << "Fail!" << endl;
+	}
+
+	students.clear();
+	teachers.clear();
+}
+
