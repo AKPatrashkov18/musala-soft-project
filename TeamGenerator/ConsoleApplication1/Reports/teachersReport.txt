@@ -1,6 +1,0 @@
-First name: 1
-Last name: 1
-Teaching teams: 
-Team Gravity
-The Titans
-Id: 0

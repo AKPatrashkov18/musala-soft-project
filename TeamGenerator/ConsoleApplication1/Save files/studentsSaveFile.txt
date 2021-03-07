@@ -1,4 +1,0 @@
-Stanislav,Todorov,10,FrontEnd,SAT@,Not occupied,0
-Aleksandar,Patrashkov,10,Scrum,AKP@,Not occupied,1
-Martin,Bakalov,10,QA,MB@,Not occupied,2
-Kaloyan,Dinev,10,BackEnd,kdd@,Not occupied,3
