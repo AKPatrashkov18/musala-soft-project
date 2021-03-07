@@ -158,8 +158,8 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
         for (size_t i = 0; i < notOccupiedCount / 4; i++)
         {
             teams.push_back(TEAM());
-            int teamNameIndex = rand() % 29;
-            int teamTaskIndex = rand() % 29;
+            int teamNameIndex = rand() % 28 + 1;
+            int teamTaskIndex = rand() % 28 + 1;
             for (int i = 0; i < teamNameIndex; i++)
             {
                 getline(teamName, container);
@@ -410,7 +410,7 @@ bool checkId(const vector<TEAM>& teams, const int wantedId)
     return false;
 }
 
-int findTeamId(const vector<TEAM>& teams, const int wantedId)
+int findTeamIndex(const vector<TEAM>& teams, const int wantedId)
 {
     for (int i = 0; i < teams.size(); i++)
     {
@@ -422,7 +422,7 @@ int findTeamId(const vector<TEAM>& teams, const int wantedId)
     return 0;
 }
 
-int findStudentId(const vector<STUDENT>& students, const int wantedId)
+int findStudentIndex(const vector<STUDENT>& students, const int wantedId)
 {
     for (int i = 0; i < students.size(); i++)
     {
@@ -434,7 +434,7 @@ int findStudentId(const vector<STUDENT>& students, const int wantedId)
     return 0;
 }
 
-int findTeacherId(const vector<TEACHER>& teachers, const int wantedId)
+int findTeacherIndex(const vector<TEACHER>& teachers, const int wantedId)
 {
     for (int i = 0; i < teachers.size(); i++)
     {
@@ -446,12 +446,17 @@ int findTeacherId(const vector<TEACHER>& teachers, const int wantedId)
     return 0;
 }
 
-void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedPersonOrEditedPerson = false, int indexOfremovedPersonOrEditedPerson = 0)
+void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedOrEditedPerson = false, int removedOrEditedPersonIndex = 0)
 {
-    int index;
-    if (removedPersonOrEditedPerson)
+    if (teams.size() == 0)
     {
-        index = indexOfremovedPersonOrEditedPerson;
+        cerr << "Error! There are no teams" << endl;
+        return;
+    }
+    int index;
+    if (removedOrEditedPerson)
+    {
+        index = removedOrEditedPersonIndex;
     }
     else
     {
@@ -471,14 +476,14 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         archaivedTeams.open("Archived files\\archaivedTeams.txt", ios::in | ios::ate);
         if (archaivedTeams.is_open())
         {
-            archaivedTeams << makeTeamsReport(teams, findTeamId(teams, index));
+            archaivedTeams << makeTeamsReport(teams, findTeamIndex(teams, index));
             archaivedTeams.close();
         }
         for (int i = 0; i < teachers.size(); i++)
         {
             for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
             {
-                if (teachers[i].teachingTeams[j] == teams[findTeamId(teams, index)].name)
+                if (teachers[i].teachingTeams[j] == teams[findTeamIndex(teams, index)].name)
                 {
                     teachers[i].teachingTeams.erase(teachers[i].teachingTeams.begin() + j);
                     break;
@@ -487,30 +492,35 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         for (int i = 0; i < students.size(); i++)
         {
-            if (students[i].teamStatus == teams[findTeamId(teams, index)].name)
+            if (students[i].teamStatus == teams[findTeamIndex(teams, index)].name)
             {
                 students[i].teamStatus = "Not occupied";
             }
         }
-        teams.erase(teams.begin() + findTeamId(teams, index));
+        teams.erase(teams.begin() + findTeamIndex(teams, index));
     }
 }
 
 void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    if (students.size() == 0)
+    {
+        cerr << "Error! There are no students!" << endl;
+        return;
+    }
     system("cls");
     for (int i = 0; i < students.size(); i++)
     {
         cout << makeStudentsReport(students, i);
     }
     cout << "Enter an index of a student you want to delete: ";
-    int deleteIndex = findStudentId(students, inputValidation());
+    int deleteIndex = findStudentIndex(students, inputValidation());
 
     for (int i = 0; i < teams.size(); i++)
     {
         if (teams[i].name == students[deleteIndex].teamStatus)
         {
-            archiveTeam(students, teachers, teams, true, findStudentId(students, i));
+            archiveTeam(students, teachers, teams, true, findStudentIndex(students, i));
             break;
         }
     }
@@ -520,12 +530,17 @@ void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    if (teachers.size() == 0)
+    {
+        cerr << "Error! There are no teachers!" << endl;
+        return;
+    }
     for (int i = 0; i < teachers.size(); i++)
     {
         cout << makeTeachersReport(teachers, i);
     }
     cout << "Enter an index of a teacher you want to delete: ";
-    int deleteIndex = findTeacherId(teachers, inputValidation());
+    int deleteIndex = findTeacherIndex(teachers, inputValidation());
 
     if (teachers.size() == 1)
     {
@@ -554,6 +569,11 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    if (students.size() == 0)
+    {
+        cerr << "Error! There are no students!" << endl;
+        return;
+    }
     system("cls");
     for (int i = 0; i < students.size(); i++)
     {
@@ -585,10 +605,10 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         {
             for (int j = 0; j < teams[i].students.size(); j++)
             {
-                if (students[findStudentId(students, editIndex)].firstName + " " + students[findStudentId(students, editIndex)].lastName == teams[i].students[j])
+                if (students[findStudentIndex(students, editIndex)].firstName + " " + students[findStudentIndex(students, editIndex)].lastName == teams[i].students[j])
                 {
-                    teams[i].students[j] = container + " " + students[findStudentId(students, editIndex)].lastName;
-                    students[findStudentId(students, editIndex)].firstName = container;
+                    teams[i].students[j] = container + " " + students[findStudentIndex(students, editIndex)].lastName;
+                    students[findStudentIndex(students, editIndex)].firstName = container;
                     break;
                 }
             }
@@ -601,10 +621,10 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         {
             for (int j = 0; j < teams[i].students.size(); j++)
             {
-                if (students[findStudentId(students, editIndex)].firstName + " " + students[findStudentId(students, editIndex)].lastName == teams[i].students[j])
+                if (students[findStudentIndex(students, editIndex)].firstName + " " + students[findStudentIndex(students, editIndex)].lastName == teams[i].students[j])
                 {
-                    teams[i].students[j] = students[findStudentId(students, editIndex)].firstName + " " + container;
-                    students[findStudentId(students, editIndex)].lastName = container;
+                    teams[i].students[j] = students[findStudentIndex(students, editIndex)].firstName + " " + container;
+                    students[findStudentIndex(students, editIndex)].lastName = container;
                     break;
                 }
             }
@@ -612,13 +632,13 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         break;
     case 3:
-        students[findStudentId(students, editIndex)].grade = inputValidation();
+        students[findStudentIndex(students, editIndex)].grade = inputValidation();
         break;
     case 4:
-        students[findStudentId(students, editIndex)].role = checkRole();
+        students[findStudentIndex(students, editIndex)].role = checkRole();
         break;
     case 5:
-        students[findStudentId(students, editIndex)].email = checkEmail();
+        students[findStudentIndex(students, editIndex)].email = checkEmail();
         break;
     case 0:
         return;
@@ -633,6 +653,11 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
 
 void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    if (teachers.size() == 0)
+    {
+        cerr << "Error! There are no teachers!" << endl;
+        return;
+    }
     system("cls");
     for (int i = 0; i < teachers.size(); i++)
     {
@@ -659,23 +684,23 @@ void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         cin >> container;
         for (int i = 0; i < teams.size(); i++)
         {
-            if (teams[i].teacher == teachers[findTeacherId(teachers, editIndex)].firstName + " " + teachers[findTeacherId(teachers, editIndex)].lastName)
+            if (teams[i].teacher == teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName)
             {
-                teams[i].teacher = container + " " + teachers[findTeacherId(teachers, editIndex)].lastName;
+                teams[i].teacher = container + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName;
             }
         }
-        teachers[findTeacherId(teachers, editIndex)].firstName = container;
+        teachers[findTeacherIndex(teachers, editIndex)].firstName = container;
         break;
     case 2:
         cin >> container;
         for (int i = 0; i < teams.size(); i++)
         {
-            if (teams[i].teacher == teachers[findTeacherId(teachers, editIndex)].firstName + " " + teachers[findTeacherId(teachers, editIndex)].lastName)
+            if (teams[i].teacher == teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName)
             {
-                teams[i].teacher = teachers[findTeacherId(teachers, editIndex)].firstName + " " + container;
+                teams[i].teacher = teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + container;
             }
         }
-        teachers[findTeacherId(teachers, editIndex)].lastName = container;
+        teachers[findTeacherIndex(teachers, editIndex)].lastName = container;
         break;
     case 0:
         return;

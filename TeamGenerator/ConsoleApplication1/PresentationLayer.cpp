@@ -287,7 +287,7 @@ bool mainMenu(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     cout << "|                   2. Add teacher                                 |" << endl;
     cout << "|                   3. Generate teams                              |" << endl;
     cout << "|                   4. Print menu                                  |" << endl;
-    cout << "|                   5. Create reports menu                         |" << endl;
+    cout << "|                   5. Reports menu                                |" << endl;
     cout << "|                   6. Edit menu                                   |" << endl;
     cout << "|                   7. Delete student                              |" << endl;
     cout << "|                   8. Delete teacher                              |" << endl;
