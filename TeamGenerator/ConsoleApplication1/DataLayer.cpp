@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// checks if the role is valid
 string checkRole()
 {
     string role;
@@ -24,6 +25,7 @@ string checkRole()
     return role;
 }
 
+// checks if the email is valid
 string checkEmail()
 {
     string email;
@@ -39,6 +41,7 @@ string checkEmail()
     return checkEmail();
 }
 
+// checks if the input is correct
 int inputValidation()
 {
     int number;
@@ -106,6 +109,7 @@ void addTeachers(vector<TEACHER>& teachers, SCHOOL& school)
     system("cls");
 }
 
+// selects a random student with a certain role
 int findRole(vector<STUDENT>& students, const string wantedRole, const string teamName)
 {
     vector<int> roleId;
@@ -113,14 +117,17 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     {
         if (students[i].role == wantedRole and students[i].teamStatus == "Not occupied")
         {
+            // finds what are the student Ids that compile a certain role
             roleId.push_back(students[i].id);
         }
     }
+    // checks if there are no suitable students
     if (roleId.size() == 0)
     {
         return -1;
     }
     int shuffle;
+    // shuffles the students
     for (int i = 0; i < roleId.size(); i++)
     {
         shuffle = rand() % roleId.size();
@@ -130,6 +137,7 @@ int findRole(vector<STUDENT>& students, const string wantedRole, const string te
     return roleId[0];
 }
 
+// finds how many students don't have a team
 int findNotOccupiedStudents(vector<STUDENT>& students)
 {
     int notOccupiedCount = 0;
@@ -160,26 +168,31 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
             teams.push_back(TEAM());
             int teamNameIndex = rand() % 28 + 1;
             int teamTaskIndex = rand() % 28 + 1;
+            // skips the lines in teamnames file
             for (int i = 0; i < teamNameIndex; i++)
             {
                 getline(teamName, container);
             }
             teams[teams.size() - 1].name = container;
 
+            // skip lines in the teamtasks file
             for (int i = 0; i < teamTaskIndex; i++)
             {
                 getline(teamTask, container);
             }
             teams[teams.size() - 1].discription = container;
-
+            // get the current time
             time_t now = time(0);
             container = time(&now);
 
             teams[teams.size() - 1].date = container;
 
+            // getting the Id of the student that is suitable for the role
             studentIndex = findRole(students, "BackEnd", teams[teams.size() - 1].name);
+            // checks if there are no suitable students
             if (studentIndex == -1)
             {
+                // erases the last element
                 teams.erase(teams.end() - 1);
                 cerr << "Error! Not enough students or too many students have the same role! There are " << teams.size() << "created teams. Wherethere could be " << notOccupiedCount / 4 << endl;
                 return;
@@ -216,11 +229,13 @@ void generateTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<T
                 return;
             }
 
+            // choosing a random teacher
             int randomIndex = rand() % teachers.size();
             teams[teams.size() - 1].teacher = teachers[randomIndex].firstName + " " + teachers[randomIndex].lastName;
             teams[teams.size() - 1].id = teams.size() - 1;
             teachers[randomIndex].teachingTeams.push_back(teams[teams.size() - 1].name);
 
+            // goes to the beginning of the files
             teamName.clear();
             teamName.seekg(0, ios::beg);
 
@@ -245,13 +260,17 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     ofstream teachersSaveFile;
     ofstream teamsSaveFile;
 
+    // Opens the file and delets its content
     studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::in | ios::trunc);
+    // checks if the file is open
     if (studentsSaveFile.is_open())
     {
         for (int i = 0; i < students.size(); i++)
         {
+            // inputs the saved data into the file
             studentsSaveFile << students[i].toString() << endl;
         }
+        // closing the file
         studentsSaveFile.close();
     }
     else
@@ -289,6 +308,7 @@ void saveFiles(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM
     cout << "Congratulations! Your data has been saved! " << endl;
 }
 
+// converts string to an int
 int stringConvertor(string& text)
 {
     stringstream convertor(text);
@@ -303,15 +323,19 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     ifstream teachersSaveFile;
     ifstream teamsSaveFile;
     string container;
+    // clears all current data
     students.clear();
     teachers.clear();
     teams.clear();
     school.studentsName.clear();
     school.teachersName.clear();
 
+    // opens the save file
     studentsSaveFile.open("Save files\\studentsSaveFile.txt", ios::out);
+    // checks if the file is open
     if (studentsSaveFile.is_open())
     {
+        // extract data from the file until the file is empty
         while (!studentsSaveFile.eof())
         {
             students.push_back(STUDENT());
@@ -331,7 +355,9 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
             students[students.size() - 1].id = stringConvertor(container);
             school.studentsName.push_back(students[students.size() - 1].firstName + " " + students[students.size() - 1].lastName);
         }
+        // erases the last element
         students.erase(students.end() - 1);
+        // closes the file
         studentsSaveFile.close();
     }
     else
@@ -398,6 +424,7 @@ void openSave(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>
     cout << "Congratulations! Your data has been opened! " << endl;
 }
 
+// checks if the wanted Id exists 
 bool checkId(const vector<TEAM>& teams, const int wantedId)
 {
     for (int i = 0; i < teams.size(); i++)
@@ -410,6 +437,7 @@ bool checkId(const vector<TEAM>& teams, const int wantedId)
     return false;
 }
 
+// finds the wanted Id
 int findTeamIndex(const vector<TEAM>& teams, const int wantedId)
 {
     for (int i = 0; i < teams.size(); i++)
@@ -422,6 +450,7 @@ int findTeamIndex(const vector<TEAM>& teams, const int wantedId)
     return 0;
 }
 
+// finds the wanted Id
 int findStudentIndex(const vector<STUDENT>& students, const int wantedId)
 {
     for (int i = 0; i < students.size(); i++)
@@ -434,6 +463,7 @@ int findStudentIndex(const vector<STUDENT>& students, const int wantedId)
     return 0;
 }
 
+// finds the wanted Id
 int findTeacherIndex(const vector<TEACHER>& teachers, const int wantedId)
 {
     for (int i = 0; i < teachers.size(); i++)
@@ -448,6 +478,7 @@ int findTeacherIndex(const vector<TEACHER>& teachers, const int wantedId)
 
 void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams, bool removedOrEditedPerson = false, int removedOrEditedPersonIndex = 0)
 {
+    // checks if the vector is empty
     if (teams.size() == 0)
     {
         cerr << "Error! There are no teams" << endl;
@@ -467,13 +498,16 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         cout << "Choose index: ";
         index = inputValidation();
     }
+    // checks if the wanted Id exists
     if (!checkId(teams, index))
     {
         cerr << "Error! Please enter valid id! " << endl;
     }
     else {
         ofstream archaivedTeams;
+        // opens the file at the end
         archaivedTeams.open("Archived files\\archaivedTeams.txt", ios::in | ios::ate);
+        // checks if the file is open
         if (archaivedTeams.is_open())
         {
             archaivedTeams << makeTeamsReport(teams, findTeamIndex(teams, index));
@@ -483,6 +517,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         {
             for (int j = 0; j < teachers[i].teachingTeams.size(); j++)
             {
+                // if teachers teaching teams are equal with teamname, erase the teaching teams from the teacher
                 if (teachers[i].teachingTeams[j] == teams[findTeamIndex(teams, index)].name)
                 {
                     teachers[i].teachingTeams.erase(teachers[i].teachingTeams.begin() + j);
@@ -492,6 +527,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         }
         for (int i = 0; i < students.size(); i++)
         {
+            // if the students teamstatus is equal to the teamname, removes the student from the team
             if (students[i].teamStatus == teams[findTeamIndex(teams, index)].name)
             {
                 students[i].teamStatus = "Not occupied";
@@ -503,6 +539,7 @@ void archiveTeam(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
 
 void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    // checks if there are no students
     if (students.size() == 0)
     {
         cerr << "Error! There are no students!" << endl;
@@ -518,6 +555,7 @@ void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
     for (int i = 0; i < teams.size(); i++)
     {
+        // if the name of the team is equal to the teamstatus of the student, removes the team
         if (teams[i].name == students[deleteIndex].teamStatus)
         {
             archiveTeam(students, teachers, teams, true, findStudentIndex(students, i));
@@ -530,6 +568,7 @@ void deleteStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    // checks if there are no teachers
     if (teachers.size() == 0)
     {
         cerr << "Error! There are no teachers!" << endl;
@@ -542,6 +581,7 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
     cout << "Enter an index of a teacher you want to delete: ";
     int deleteIndex = findTeacherIndex(teachers, inputValidation());
 
+    // if there is one teacher, deletes all students, teachers and teams
     if (teachers.size() == 1)
     {
         students.clear();
@@ -554,6 +594,7 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
         {
             for (int j = 0; j < teachers[deleteIndex].teachingTeams.size(); j++)
             {
+                // if the teamname is equal to the teachers teaching teams name, change the teacher to the team
                 if (teams[i].name == teachers[deleteIndex].teachingTeams[j])
                 {
                     int randomIndex = rand() % teachers.size();
@@ -569,6 +610,7 @@ void deleteTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<
 
 void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    // checks if there are no students
     if (students.size() == 0)
     {
         cerr << "Error! There are no students!" << endl;
@@ -605,6 +647,7 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         {
             for (int j = 0; j < teams[i].students.size(); j++)
             {
+                // if the student name is equal to the teammate, changes the teammate name to the current student name
                 if (students[findStudentIndex(students, editIndex)].firstName + " " + students[findStudentIndex(students, editIndex)].lastName == teams[i].students[j])
                 {
                     teams[i].students[j] = container + " " + students[findStudentIndex(students, editIndex)].lastName;
@@ -621,6 +664,7 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         {
             for (int j = 0; j < teams[i].students.size(); j++)
             {
+                // if the student name is equal to the teammate, changes the teammate name to the current student name
                 if (students[findStudentIndex(students, editIndex)].firstName + " " + students[findStudentIndex(students, editIndex)].lastName == teams[i].students[j])
                 {
                     teams[i].students[j] = students[findStudentIndex(students, editIndex)].firstName + " " + container;
@@ -653,6 +697,7 @@ void editStudent(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
 
 void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TEAM>& teams)
 {
+    // checks if there are no teachers
     if (teachers.size() == 0)
     {
         cerr << "Error! There are no teachers!" << endl;
@@ -684,6 +729,7 @@ void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         cin >> container;
         for (int i = 0; i < teams.size(); i++)
         {
+            // if the teacher of the team is equal to the teacher, changes the teacher of the team to current teacher's name 
             if (teams[i].teacher == teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName)
             {
                 teams[i].teacher = container + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName;
@@ -695,6 +741,7 @@ void editTeacher(vector<STUDENT>& students, vector<TEACHER>& teachers, vector<TE
         cin >> container;
         for (int i = 0; i < teams.size(); i++)
         {
+            // if the teacher of the team is equal to the teacher, changes the teacher of the team to current teacher's name 
             if (teams[i].teacher == teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + teachers[findTeacherIndex(teachers, editIndex)].lastName)
             {
                 teams[i].teacher = teachers[findTeacherIndex(teachers, editIndex)].firstName + " " + container;
